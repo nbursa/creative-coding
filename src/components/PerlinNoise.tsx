@@ -3,21 +3,23 @@ import p5 from "p5";
 
 interface PerlinNoiseProps {
   p5Props?: any;
+  backgroundColor?: string;
+  particleColor?: string;
 }
 
-const PerlinNoise: React.FC<PerlinNoiseProps> = ({p5Props}) => {
+const PerlinNoise: React.FC<PerlinNoiseProps> = ({p5Props, backgroundColor = "#000000", particleColor = "#ffffff"}) => {
   const perlinNoiseRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (perlinNoiseRef.current) {
-      new p5((p: p5) => sketch(p, p5Props), perlinNoiseRef.current);
+      new p5((p: p5) => sketch(p, p5Props, backgroundColor, particleColor), perlinNoiseRef.current);
     }
-  }, [p5Props]);
+  }, [p5Props, backgroundColor, particleColor]);
 
   return <div className="max-h-screen max-w-screen" ref={perlinNoiseRef}></div>;
 };
 
-const sketch = (p: p5, p5Props: any) => {
+const sketch = (p: p5, p5Props: any, backgroundColor: string, particleColor: string) => {
   let inc = 0.1;
   let scl = 20;
   let cols: number, rows: number;
@@ -27,13 +29,13 @@ const sketch = (p: p5, p5Props: any) => {
 
   p.setup = () => {
     p.createCanvas(p.windowWidth, p.windowHeight);
+    p.background(backgroundColor);
     cols = p.floor(p.width / scl);
     rows = p.floor(p.height / scl);
     flowfield = new Array(cols * rows);
     for (let i = 0; i < 500; i++) {
-      particles[i] = new Particle(p);
+      particles[i] = new Particle(p, particleColor);
     }
-    p.background(255);
   };
 
   p.windowResized = () => {
@@ -72,12 +74,14 @@ const sketch = (p: p5, p5Props: any) => {
     vel: p5.Vector;
     acc: p5.Vector;
     maxSpeed: number;
+    color: string;
 
-    constructor(p: p5) {
+    constructor(p: p5, color: string) {
       this.pos = p.createVector(p.random(p.width), p.random(p.height));
       this.vel = p.createVector(0, 0);
       this.acc = p.createVector(0, 0);
       this.maxSpeed = 4;
+      this.color = color;
     }
 
     follow(vectors: p5.Vector[]) {
@@ -107,7 +111,7 @@ const sketch = (p: p5, p5Props: any) => {
     }
 
     show() {
-      p.stroke(0, 50);
+      p.stroke(this.color);
       p.strokeWeight(1);
       p.point(this.pos.x, this.pos.y);
     }

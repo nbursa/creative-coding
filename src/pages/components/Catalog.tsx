@@ -9,6 +9,9 @@ const Catalog = () => {
       <li>
         <Link href="/demo/perlin-noise">Perlin Noise</Link>
       </li>
+      <li>
+        <Link href="/demo/fractal-noise">Fractal Noise</Link>
+      </li>
     </ul>
   </div>
 }
