@@ -1,0 +1,76 @@
+@keyframes pulse-shadow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(103, 58, 183, 0);
+    }
+    50% {
+        box-shadow: 0 0 50px 20px rgba(103, 58, 183, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(103, 58, 183, 0);
+    }
+}
+
+.animate-pulse-shadow {
+    animation: pulse-shadow 2s ease-out infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+        border-color: rgb(103, 58, 183);
+    }
+    100% {
+        transform: rotate(360deg);
+        border-color: rgb(183, 58, 173);
+    }
+}
+
+.animate-spin {
+    animation: spin 20s linear infinite;
+}
+
+@keyframes rgb-border {
+    0% {
+        border-color: rgb(255, 0, 0);
+    }
+    8% {
+        border-color: rgb(255, 128, 0);
+    }
+    17% {
+        border-color: rgb(255, 255, 0);
+    }
+    25% {
+        border-color: rgb(128, 255, 0);
+    }
+    33% {
+        border-color: rgb(0, 255, 0);
+    }
+    42% {
+        border-color: rgb(0, 255, 128);
+    }
+    50% {
+        border-color: rgb(0, 255, 255);
+    }
+    58% {
+        border-color: rgb(0, 128, 255);
+    }
+    67% {
+        border-color: rgb(0, 0, 255);
+    }
+    75% {
+        border-color: rgb(127, 0, 255);
+    }
+    83% {
+        border-color: rgb(255, 0, 255);
+    }
+    91% {
+        border-color: rgb(255, 0, 127);
+    }
+    100% {
+        border-color: rgb(128, 128, 128);
+    }
+}
+
+.animate-border-rgb {
+    animation: rgb-border 8s ease-in-out infinite;
+}
