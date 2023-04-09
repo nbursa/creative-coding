@@ -1,7 +1,12 @@
 import LinkStyled from "@/components/LinkStyled";
+import React from "react";
 
-const Catalog = () => {
-  return <div>
+interface CatalogProps {
+  className: string;
+}
+
+const Catalog: React.FC<CatalogProps> = ({className}) => {
+  return <div className={className}>
     <ol>
       <li>
         <LinkStyled href="/demo/flow-field" label="Flow Field"/>

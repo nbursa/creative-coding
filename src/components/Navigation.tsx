@@ -36,25 +36,17 @@ const Navigation = () => {
             </Link>
           </div>
           <div className="hidden sm:flex sm:items-center sm:ml-6">
-            <Link href="/demo" legacyBehavior>
-              <a className="text-gray-500 hover:text-gray-300 ml-4">
-                Templates
-              </a>
+            <Link href="/demo" className="text-gray-300 hover:text-gray-500 ml-4 active:text-yellow-300">
+              Templates
             </Link>
-            <Link href="/docs" legacyBehavior>
-              <a className="text-gray-500 hover:text-gray-300 ml-4">
-                Documentation
-              </a>
+            <Link href="/docs" className="text-gray-300 hover:text-gray-500 ml-4 active:text-yellow-300">
+              Documentation
             </Link>
-            <Link href="/learn" legacyBehavior>
-              <a className="text-gray-500 hover:text-gray-300 ml-4">
-                Learn
-              </a>
+            <Link href="/learn" className="text-gray-300 hover:text-gray-500 ml-4 active:text-yellow-300">
+              Learn
             </Link>
-            <Link href="/deploy" legacyBehavior>
-              <a className="text-gray-500 hover:text-gray-300 ml-4">
-                Deployment
-              </a>
+            <Link href="/deploy" className="text-gray-300 hover:text-gray-500 ml-4 active:text-yellow-300">
+              Deployment
             </Link>
           </div>
         </div>

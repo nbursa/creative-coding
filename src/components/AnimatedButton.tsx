@@ -4,12 +4,13 @@ import Link from "next/link";
 interface AnimatedButtonProps {
   href: string;
   label: string;
+  className: string;
 }
 
-const AnimatedButton: React.FC<AnimatedButtonProps> = ({label, href}) => {
+const AnimatedButton: React.FC<AnimatedButtonProps> = ({label, href, className}) => {
   return (
     <Link href={href}
-          className="relative bg-transparent text-white font-medium py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+          className={`relative bg-transparent text-white font-medium py-2 px-4 rounded-md hover:shadow-lg ${className}`}>
       {label}
       <div
         className="absolute inset-0 rounded-md border-0 border-purple-600 border-opacity-0 animate-pulse-shadow"></div>
