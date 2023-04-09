@@ -1,11 +1,6 @@
 import {Inter} from 'next/font/google'
 import Link from "next/link";
-
-interface ButtonCardProps {
-  href: string;
-  title: string;
-  description: string;
-}
+import {ButtonCardProps} from "@/types";
 
 const inter = Inter({subsets: ['latin']})
 
@@ -17,8 +12,8 @@ const ButtonCard: React.FC<ButtonCardProps> = ({href, title, description}) => {
       rel="noopener noreferrer"
     >
       <div className={`${inter.className} mb-3 text-2xl font-semibold text-left`}>
-        {title}{' '}
-        <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
+        {title}
+        <span className="ml-2 inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               -&gt;
             </span>
       </div>

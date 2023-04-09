@@ -1,10 +1,5 @@
 import ButtonCard from "@/components/ButtonCard";
-
-interface CardsProp {
-  title?: string;
-  description?: string;
-  className?: string;
-}
+import {CardsProp} from "@/types";
 
 const Cards: React.FC<CardsProp> = ({title, description, className}) => {
   return (

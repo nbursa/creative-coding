@@ -1,14 +1,6 @@
 import {useEffect, useRef} from 'react';
 import {noise} from 'perlin-noise';
-
-interface Particle {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  update: (field: { x: number; y: number }[], width: number, height: number) => void;
-  draw: (ctx: CanvasRenderingContext2D) => void;
-}
+import {Particle} from "@/types";
 
 const FractalNoise: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);

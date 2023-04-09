@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, {useEffect, useRef} from 'react';
 import * as THREE from 'three';
 
 class FlowField extends THREE.Object3D {
@@ -15,7 +15,7 @@ class FlowField extends THREE.Object3D {
     const step = this.size / this.resolution;
 
     const arrowGeometry = new THREE.CylinderGeometry(0, 0.1, step, 12, 1);
-    const arrowMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide });
+    const arrowMaterial = new THREE.MeshBasicMaterial({color: 0xffffff, side: THREE.DoubleSide});
 
     for (let i = 0; i < this.resolution; i++) {
       for (let j = 0; j < this.resolution; j++) {
@@ -31,7 +31,7 @@ class FlowField extends THREE.Object3D {
           0.2 * step
         );
 
-        arrow.userData = { direction: new THREE.Vector3(0, 1, 0), intensity: 0 };
+        arrow.userData = {direction: new THREE.Vector3(0, 1, 0), intensity: 0};
 
         const arrowMesh = new THREE.Mesh(arrowGeometry, arrowMaterial);
         arrowMesh.scale.set(0.5, 1, 0.5);
@@ -60,7 +60,7 @@ class FlowField extends THREE.Object3D {
 
       arrow.setDirection(direction);
 
-      arrow.userData.intensity = intensity; // Update the intensity value in userData
+      arrow.userData.intensity = intensity;
 
       const color = new THREE.Color(0xffffff).lerp(new THREE.Color(0x0000ff), intensity);
       ((arrow.children[0] as THREE.Mesh).material as THREE.MeshBasicMaterial).color.set(color);
@@ -70,20 +70,15 @@ class FlowField extends THREE.Object3D {
   }
 
 
-
-
   updateArrows() {
     this.arrows.forEach((arrow) => {
       const intensity = arrow.userData.intensity;
       const color = new THREE.Color(0xffffff).lerp(new THREE.Color(0x0000ff), intensity);
-
-      // (arrow.children[0] as THREE.Mesh).material.color.set(color);
       ((arrow.children[0] as THREE.Mesh).material as THREE.MeshBasicMaterial).color.set(color);
 
     });
   }
 }
-
 
 
 const FlowFieldComponent = () => {
@@ -94,7 +89,7 @@ const FlowFieldComponent = () => {
 
     const canvas = canvasRef.current;
 
-    const renderer = new THREE.WebGLRenderer({ canvas });
+    const renderer = new THREE.WebGLRenderer({canvas});
 
     const scene = new THREE.Scene();
 
@@ -146,21 +141,17 @@ const FlowFieldComponent = () => {
 
     function render() {
       requestAnimationFrame(render);
-
       // Update arrow intensities
       flowField.updateArrows();
-
       renderer.render(scene, camera);
     }
-
-
 
 
     render();
 
   }, []);
 
-  return <canvas ref={canvasRef} className="h-screen w-screen" />;
+  return <canvas ref={canvasRef} className="h-screen w-screen"/>;
 };
 
 export default FlowFieldComponent;

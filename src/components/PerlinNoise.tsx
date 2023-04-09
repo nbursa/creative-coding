@@ -1,11 +1,6 @@
 import React, {useEffect, useRef} from "react";
 import p5 from "p5";
-
-interface PerlinNoiseProps {
-  p5Props?: any;
-  backgroundColor?: string;
-  particleColor?: string;
-}
+import {PerlinNoiseProps} from "@/types";
 
 const PerlinNoise: React.FC<PerlinNoiseProps> = ({p5Props, backgroundColor = "#000000", particleColor = "#ffffff"}) => {
   const perlinNoiseRef = useRef<HTMLDivElement>(null);

@@ -1,9 +1,5 @@
 import Link from "next/link";
-
-interface LinkStyledProps {
-  href: string;
-  label: string;
-}
+import {LinkStyledProps} from "@/types";
 
 const LinkStyled: React.FC<LinkStyledProps> = ({href, label}) => {
   return (

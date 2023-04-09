@@ -1,11 +1,6 @@
 import React from 'react'
 import Link from "next/link";
-
-interface AnimatedButtonProps {
-  href: string;
-  label: string;
-  className: string;
-}
+import {AnimatedButtonProps} from "@/types";
 
 const AnimatedButton: React.FC<AnimatedButtonProps> = ({label, href, className}) => {
   return (

@@ -1,9 +1,6 @@
 import LinkStyled from "@/components/LinkStyled";
 import React from "react";
-
-interface CatalogProps {
-  className: string;
-}
+import {CatalogProps} from "@/types";
 
 const Catalog: React.FC<CatalogProps> = ({className}) => {
   return <div className={className}>
