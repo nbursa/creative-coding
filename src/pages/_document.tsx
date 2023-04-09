@@ -1,5 +1,5 @@
 import {Head, Html, Main, NextScript} from 'next/document'
-import Navigation from "@/pages/components/Navigation";
+import Navigation from "@/components/Navigation";
 
 export default function Document() {
   return (

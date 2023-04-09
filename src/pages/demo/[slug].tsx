@@ -3,8 +3,7 @@ import {useRouter} from "next/router";
 import dynamic from 'next/dynamic'
 
 const getComponent = (formatedSlug: string) => {
-  const component = dynamic(import(`@/components/${formatedSlug}`))
-  return component;
+  return dynamic(import(`@/components/${formatedSlug}`));
 }
 
 const DemoPage = () => {
@@ -19,7 +18,6 @@ const DemoPage = () => {
     .map(substr => substr.charAt(0).toUpperCase() + substr.slice(1))
     .join("");
 
-  // console.log("joined: " + formatedSlug);
   const Component = getComponent(formatedSlug)
 
   return (
