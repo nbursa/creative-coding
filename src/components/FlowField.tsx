@@ -88,19 +88,19 @@ const FlowFieldComponent = () => {
     if (!canvasRef.current) return;
 
     const canvas = canvasRef.current;
-
     const renderer = new THREE.WebGLRenderer({canvas});
-
     const scene = new THREE.Scene();
-
     const camera = new THREE.PerspectiveCamera(75, 2, 0.1, 5);
+
     camera.position.z = 2;
 
     const light = new THREE.DirectionalLight(0xffffff, 1);
+
     light.position.set(-1, 2, 4);
     scene.add(light);
 
     const flowField = new FlowField(20, 20);
+
     scene.add(flowField);
 
     const raycaster = new THREE.Raycaster();
