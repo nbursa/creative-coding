@@ -1,6 +1,5 @@
-import {useRouter} from "next/router";
 import {Inter} from 'next/font/google'
-import React from "react";
+import Link from "next/link";
 
 interface ButtonCardProps {
   href: string;
@@ -11,16 +10,9 @@ interface ButtonCardProps {
 const inter = Inter({subsets: ['latin']})
 
 const ButtonCard: React.FC<ButtonCardProps> = ({href, title, description}) => {
-  const router = useRouter()
-
-  const goTo = (e: React.MouseEvent<HTMLButtonElement>, url: string) => {
-    e.preventDefault()
-    return router.push(url)
-  }
-
   return (
-    <button
-      onClick={(e) => goTo(e, href)}
+    <Link
+      href={href}
       className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
       rel="noopener noreferrer"
     >
@@ -35,7 +27,7 @@ const ButtonCard: React.FC<ButtonCardProps> = ({href, title, description}) => {
       >
         {description}
       </p>
-    </button>
+    </Link>
   )
 }
 
