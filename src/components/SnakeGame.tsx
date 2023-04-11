@@ -1,66 +1,83 @@
 import {useEffect, useState} from 'react';
-// import p5 from 'p5';
 
 const p5 = require('p5');
+const {Vector} = require('p5');
 
 const SnakeGame = () => {
   const [canvas, setCanvas] = useState<HTMLDivElement | null>(null);
+  const [score, setScore] = useState(0);
+  const sketch = (p: typeof p5) => {
+    const rows = 20;
+    const cols = 20;
+    const w = p.width / cols;
+    const h = p.height / rows;
+    let snake = new Snake(p);
+    let food = new Food(p, cols, rows);
+
+    p.setup = () => {
+      p.createCanvas(400, 400);
+      p.frameRate(10);
+    };
+
+    p.draw = () => {
+      p.background(51);
+
+      if (snake.eat(p, food.pos)) {
+        food = new Food(p, cols, rows);
+        setScore((prevScore) => prevScore + 1);
+      }
+
+      snake.update(p);
+      snake.show(p);
+
+      if (snake.death(p)) {
+        p.noLoop();
+      }
+
+      food.show(p);
+    };
+
+    p.keyPressed = () => {
+      if (p.keyCode === p.UP_ARROW) {
+        snake.dir(0, -1);
+      } else if (p.keyCode === p.DOWN_ARROW) {
+        snake.dir(0, 1);
+      } else if (p.keyCode === p.LEFT_ARROW) {
+        snake.dir(-1, 0);
+      } else if (p.keyCode === p.RIGHT_ARROW) {
+        snake.dir(1, 0);
+      }
+    };
+  };
 
   useEffect(() => {
     if (canvas) {
-      const sketch = (p: typeof p5) => {
-        const rows = 20;
-        const cols = 20;
-        const w = p.width / cols;
-        const h = p.height / rows;
-        let snake = new Snake(p);
-        let food = new Food(p, cols, rows);
-
-        p.setup = () => {
-          p.createCanvas(400, 400);
-          p.frameRate(10);
-        };
-
-        p.draw = () => {
-          p.background(51);
-
-          if (snake.eat(p, food.pos)) {
-            food = new Food(p, cols, rows);
-          }
-
-          snake.update(p);
-          snake.show(p);
-
-          if (snake.death(p)) {
-            p.noLoop();
-          }
-
-          food.show(p);
-        };
-
-        p.keyPressed = () => {
-          if (p.keyCode === p.UP_ARROW) {
-            snake.dir(0, -1);
-          } else if (p.keyCode === p.DOWN_ARROW) {
-            snake.dir(0, 1);
-          } else if (p.keyCode === p.LEFT_ARROW) {
-            snake.dir(-1, 0);
-          } else if (p.keyCode === p.RIGHT_ARROW) {
-            snake.dir(1, 0);
-          }
-        };
-      };
-
       new p5(sketch, canvas);
     }
   }, [canvas]);
 
+  const handleReset = () => {
+    setScore(0);
+    if (canvas) {
+      canvas.innerHTML = '';
+      new p5(sketch, canvas);
+    }
+  };
+
+
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex flex-col justify-center items-center w-screen mt-[25vh]">
+      <div className="absolute top-4 left-4 font-bold text-xl text-white">
+        <div>
+          Score: {score}
+        </div>
+        <button onClick={handleReset} className="px-4 text-sm border rounded-md">Reset Game</button>
+      </div>
       <div
         className="border border-gray-600 rounded-md"
         ref={(el) => setCanvas(el)}
-      ></div>
+      >
+      </div>
     </div>
   );
 };
@@ -71,11 +88,11 @@ class Snake {
   xSpeed: number;
   ySpeed: number;
   total: number;
-  tail: any[];
+  tail: typeof Vector[];
 
   constructor(p: typeof p5) {
-    this.x = p.floor(p.random(p.width / 10)) * 10;
-    this.y = p.floor(p.random(p.height / 10)) * 10;
+    this.x = Math.floor(Math.random() * (p.width / 10)) * 10;
+    this.y = Math.floor(Math.random() * (p.height / 10)) * 10;
     this.xSpeed = 1;
     this.ySpeed = 0;
     this.total = 0;
@@ -142,8 +159,8 @@ class Food {
 
   constructor(p: typeof p5, cols: number, rows: number) {
     this.pos = p.createVector(
-      p.floor(p.random(cols)) * 10,
-      p.floor(p.random(rows)) * 10
+      Math.floor(Math.random() * cols) * 10,
+      Math.floor(Math.random() * rows) * 10
     );
   }
 
