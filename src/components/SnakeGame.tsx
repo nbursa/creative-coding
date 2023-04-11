@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 const p5 = require('p5');
 const {Vector} = require('p5');
@@ -6,32 +6,50 @@ const {Vector} = require('p5');
 const SnakeGame = () => {
   const [canvas, setCanvas] = useState<HTMLDivElement | null>(null);
   const [score, setScore] = useState(0);
+  const [frameRate, setFrameRate] = useState(5);
+  const [isDead, setIsDead] = useState(false);
+  const isDeadRef = useRef(isDead);
+
+  const onGameOver = () => {
+    setIsDead(true);
+  };
+
   const sketch = (p: typeof p5) => {
     const rows = 20;
     const cols = 20;
     const w = p.width / cols;
     const h = p.height / rows;
     let snake = new Snake(p);
-    let food = new Food(p, cols, rows);
+    let food = new Food(p, cols, rows)
 
     p.setup = () => {
-      p.createCanvas(400, 400);
-      p.frameRate(10);
+      const w = window.innerWidth
+      const h = window.innerHeight
+      window.innerWidth > 768 ? p.createCanvas(w / 2, h / 2) : p.createCanvas(w - 80, h - 80)
+      p.frameRate(frameRate)
     };
 
     p.draw = () => {
-      p.background(51);
+      p.background("#1d1f21");
 
       if (snake.eat(p, food.pos)) {
         food = new Food(p, cols, rows);
         setScore((prevScore) => prevScore + 1);
+        setFrameRate((prevFrameRate) => prevFrameRate + 1);
+        p.frameRate(frameRate);
       }
 
       snake.update(p);
       snake.show(p);
 
       if (snake.death(p)) {
+        if (!isDeadRef.current) {
+          isDeadRef.current = true;
+          onGameOver();
+        }
         p.noLoop();
+      } else {
+        isDeadRef.current = false;
       }
 
       food.show(p);
@@ -52,12 +70,15 @@ const SnakeGame = () => {
 
   useEffect(() => {
     if (canvas) {
+      canvas.innerHTML = '';
       new p5(sketch, canvas);
     }
   }, [canvas]);
 
   const handleReset = () => {
     setScore(0);
+    setFrameRate(5)
+    setIsDead(false);
     if (canvas) {
       canvas.innerHTML = '';
       new p5(sketch, canvas);
@@ -66,18 +87,19 @@ const SnakeGame = () => {
 
 
   return (
-    <div className="flex flex-col justify-center items-center w-screen mt-[25vh]">
+    <div className="flex flex-col justify-center items-center w-screen md:pt-[10vh]">
       <div className="absolute top-4 left-4 font-bold text-xl text-white">
         <div>
-          Score: {score}
+          Score: {score}, Frame Rate: {frameRate}
         </div>
         <button onClick={handleReset} className="px-4 text-sm border rounded-md">Reset Game</button>
       </div>
+      {isDead && <div
+          className="absolute top-20 bottom-0 left-0 right-0 flex justify-center items-center bg-black z-10">DEAD!</div>}
       <div
-        className="border border-gray-600 rounded-md"
+        className="relative border border-gray-600"
         ref={(el) => setCanvas(el)}
-      >
-      </div>
+      ></div>
     </div>
   );
 };
@@ -115,15 +137,21 @@ class Snake {
   }
 
   death(p: typeof p5) {
+    if (this.x < 0 || this.x >= p.width || this.y < 0 || this.y >= p.height) {
+      this.total = 0;
+      this.tail = [];
+      return true;
+    }
+
     for (let i = 0; i < this.tail.length; i++) {
-      const pos = this.tail[i];
-      const d = p5.Vector.dist(p.createVector(this.x, this.y), pos);
+      const d = p.dist(this.x, this.y, this.tail[i].x, this.tail[i].y);
       if (d < 1) {
         this.total = 0;
         this.tail = [];
         return true;
       }
     }
+
     return false;
   }
 
@@ -134,21 +162,29 @@ class Snake {
       }
     }
     this.tail[this.total - 1] = p.createVector(this.x, this.y);
-
     this.x += this.xSpeed * 10;
     this.y += this.ySpeed * 10;
-
-    this.x = p.constrain(this.x, 0, p.width - 10);
-    this.y = p.constrain(this.y, 0, p.height - 10);
   }
+
 
   show(p: typeof p5) {
     p.stroke(255);
     p.strokeWeight(1);
     p.fill("green");
-    p.rect(this.x, this.y, 10, 10);
+
+    if (this.x >= 0 && this.x < p.width && this.y >= 0 && this.y < p.height) {
+      p.rect(this.x, this.y, 10, 10);
+    }
+
     for (let i = 0; i < this.tail.length; i++) {
-      p.rect(this.tail[i].x, this.tail[i].y, 10, 10);
+      if (
+        this.tail[i].x >= 0 &&
+        this.tail[i].x < p.width &&
+        this.tail[i].y >= 0 &&
+        this.tail[i].y < p.height
+      ) {
+        p.rect(this.tail[i].x, this.tail[i].y, 10, 10);
+      }
     }
   }
 }

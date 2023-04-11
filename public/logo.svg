@@ -1,0 +1,20 @@
+<svg viewBox="0 0 45 24" xmlns="http://www.w3.org/2000/svg">
+    <style>
+        #tspan20 {
+        font-variant: normal;
+        font-weight: normal;
+        font-size: 24px;
+        font-family: Helvetica;-inkscape-font-specification: Helvetica;
+        writing-mode: lr-tb;
+        fill: #ffffff;
+        fill-opacity: 1;
+        fill-rule: nonzero;
+        stroke: none;
+        transform="matrix(1,0,0,-1,72.024,758.86)"
+        }
+    </style>
+    <text id="text22">
+        <tspan id="tspan20" x="-1" y="18">[::][:]
+        </tspan>
+    </text>
+</svg>

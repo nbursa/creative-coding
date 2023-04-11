@@ -17,8 +17,8 @@ export const catalogLinks: CatalogLinkType[] = [
     label: "Snake Game",
     href: "/demo/snake-game"
   },
-  {
-    label: "Pixel Letter",
-    href: "/demo/pixel-letter"
-  },
+  // {
+  //   label: "Pixel Letter",
+  //   href: "/demo/pixel-letter"
+  // },
 ]

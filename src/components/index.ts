@@ -1,4 +1,4 @@
-import FlowFieldComponent from "@/components/OldFlowField";
+import FlowFieldComponent from "@/components/FlowField";
 import PercentFieldComponent from "@/components/PerlinNoise"
 import PerlinNoise from "@/components/PerlinNoise"
 import FractalNoise from "@/components/FractalNoise"
