@@ -1,242 +1,183 @@
 import {useEffect, useRef} from 'react';
-import {noise} from 'perlin-noise';
-import {Particle} from "@/types";
+import p5 from 'p5';
 
 const FractalNoise: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  // useEffect(() => {
+  //   const canvas = canvasRef.current;
+  //   if (!canvas) {
+  //     return;
+  //   }
+  //   const sketch = (p: p5) => {
+  //     let particles: Particle[] = [];
+  //     let field: p5.Vector[] = [];
+  //
+  //     p.setup = () => {
+  //       const width = p.windowWidth;
+  //       const height = p.windowHeight;
+  //       p.createCanvas(width, height);
+  //       particles = new Array(500)
+  //         .fill(null)
+  //         .map(() => createParticle(p.random(width), p.random(height)));
+  //
+  //       field = generateFractalNoiseField(width, height);
+  //
+  //       p.noStroke();
+  //     };
+  //
+  //     p.draw = () => {
+  //       updateParticles(particles, field, p);
+  //       p.background(0, 10);
+  //       particles.forEach((particle) => {
+  //         particle.draw(p);
+  //       });
+  //     };
+  //   };
+  //   new p5(sketch, canvas);
+  // }, []);
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) {
       return;
     }
-    const ctx = canvas.getContext("2d");
-    if (!ctx) {
-      return;
-    }
 
-    const width = canvas.width;
-    const height = canvas.height;
+    const sketch = (p: p5) => {
+      let particles: Particle[] = [];
+      let field: p5.Vector[] = [];
 
-    const particles: Particle[] = new Array(500)
-      .fill(null)
-      .map(() =>
-        createParticle(Math.random() * width, Math.random() * height)
-      );
+      p.setup = () => {
+        const width = p.windowWidth;
+        const height = p.windowHeight;
+        p.createCanvas(width, height);
+        particles = new Array(500)
+          .fill(null)
+          .map(() => createParticle(p.random(width), p.random(height), p));
 
-    const field = generateFractalNoiseField(width, height);
+        field = generateFractalNoiseField(p, width, height);
 
-    function animate() {
-      updateParticles(particles, field);
-      ctx && drawParticles(ctx, particles, width, height);
-      requestAnimationFrame(animate);
-    }
+        p.background(0);
+        p.noStroke();
+      };
 
-    animate();
+      p.draw = () => {
+        updateParticles(particles, field, p);
+        p.background(0);
+        particles.forEach((particle) => {
+          particle.draw(p);
+        });
+      };
+    };
+
+    new p5(sketch, canvas);
   }, []);
 
-  return <canvas ref={canvasRef} className="w-screen h-screen"/>;
+  return <canvas ref={canvasRef} className="w-screen h-screen bg-gray-800"/>;
 };
 
-const createParticle = (x: number, y: number): Particle => {
-  return {
-    x,
-    y,
-    vx: 0,
-    vy: 0,
-    update(field: { x: number; y: number }[], width: number, height: number) {
-      const wrappedX = Math.floor(this.x) % width;
-      const wrappedY = Math.floor(this.y) % height;
-      const index = wrappedY * width + wrappedX;
-      const fx = field[index]?.x;
-      const fy = field[index]?.y;
-      this.vx += fx;
-      this.vy += fy;
-      this.x += this.vx;
-      this.y += this.vy;
+type Particle = {
+  position: p5.Vector;
+  velocity: p5.Vector;
+  color: string;
+  update(field: p5.Vector[], p: p5): void;
+  draw(p: p5): void;
+};
 
-      if (this.x < 0) this.x += width;
-      if (this.x >= width) this.x -= width;
-      if (this.y < 0) this.y += height;
-      if (this.y >= height) this.y -= height;
+// const createParticle = (x: number, y: number): Particle => {
+//   const position = new p5.Vector(x, y);
+//   // const velocity = new p5.Vector().set(0, 0);
+//   const color = '#fff';
+//   const velocity = new p5.Vector().set(p.random(-1, 1), p.random(-1, 1));
+//
+//   return {
+//     position,
+//     velocity,
+//     color,
+//     update(field, p) {
+//       const x = Math.floor(this.position.x);
+//       const y = Math.floor(this.position.y);
+//       const index = y * p.width + x;
+//       const force = field[index];
+//       this.velocity.add(force);
+//       this.position.add(this.velocity);
+//       this.velocity.mult(0.95);
+//     },
+//     draw(p) {
+//       p.fill(this.color);
+//       p.circle(this.position.x, this.position.y, 1);
+//     },
+//   };
+// };
+const createParticle = (x: number, y: number, p: p5): Particle => {
+  const position = new p5.Vector(x, y);
+  const velocity = new p5.Vector().set(p.random(-1, 1), p.random(-1, 1));
+  const color = '#fff';
+
+  return {
+    position,
+    velocity,
+    color,
+    update(field) {
+      const x = Math.floor(this.position.x);
+      const y = Math.floor(this.position.y);
+      const index = y * p.width + x;
+      const force = field[index];
+      this.velocity.add(force);
+      this.position.add(this.velocity);
+      this.velocity.mult(0.95);
     },
-    draw(ctx) {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, 1, 0, Math.PI * 2);
-      ctx.fillStyle = "#ffffff";
-      ctx.fill();
+    draw() {
+      p.fill(this.color);
+      p.circle(this.position.x, this.position.y, 1);
     },
   };
 };
 
-const updateParticles = (
-  particles: Particle[],
-  field: { x: number; y: number }[]
-) => {
+
+const updateParticles = (particles: Particle[], field: p5.Vector[], p: p5) => {
   particles.forEach((particle) => {
-    particle.update(field, 1, 1);
+    particle.update(field, p);
   });
 };
 
-const drawParticles = (
-  ctx: CanvasRenderingContext2D,
-  particles: Particle[],
-  width: number,
-  height: number
-) => {
-  ctx.clearRect(0, 0, width, height);
-  particles.forEach((particle) => {
-    particle.draw(ctx);
-  });
-};
+class CustomVector extends p5.Vector {
+  constructor(x?: number, y?: number, z?: number) {
+    super(x, y, z);
+  }
 
-// const drawParticles = (
-//   ctx: CanvasRenderingContext2D,
-//   particles: Particle[],
-//   width: number,
-//   height: number
-// ) => {
-//   ctx.clearRect(0, 0, width, height);
-//   ctx.fillStyle = "white";
-//
-//   particles.forEach((particle) => {
-//     particle.draw(ctx);
-//   });
-// };
+  fromAngle(angle: number, length?: number): this {
+    if (typeof length === "undefined") {
+      length = 1;
+    }
+    this.x = length * Math.cos(angle);
+    this.y = length * Math.sin(angle);
+    return this;
+  }
+}
+
 
 const generateFractalNoiseField = (
+  p: p5,
   width: number,
   height: number
-): { x: number; y: number }[] => {
-  const field = new Array(width * height).fill(0).map(() => ({x: 0, y: 0}));
+): CustomVector[] => {
+  const field = new Array(width * height).fill(0).map(() => new CustomVector());
 
   const scale = 0.01;
   const octaves = 4;
   const persistence = 0.5;
+  p.noiseDetail(octaves, persistence);
+
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
-      let value = 0;
-      let amplitude = 1;
-      for (let i = 0; i < octaves; i++) {
-        const frequency = 2 ** i;
-        const noiseValue =
-          noise && noise.perlin2(x * scale * frequency, y * scale * frequency);
-        value += noiseValue * amplitude;
-        amplitude *= persistence;
-      }
-      const angle = value * Math.PI * 2;
-      field[y * width + x] = {x: Math.cos(angle), y: Math.sin(angle)};
+      const noiseValue = p.noise(x * scale, y * scale);
+      const angle = noiseValue * p.TWO_PI;
+      field[y * width + x].fromAngle(angle);
     }
   }
 
   return field;
 };
 
-// const FractalNoise: React.FC = () => {
-//   const canvasRef = useRef<HTMLCanvasElement>(null);
-//
-//   useEffect(() => {
-//     const canvas = canvasRef.current;
-//     if (!canvas) {
-//       return;
-//     }
-//     const ctx = canvas.getContext('2d');
-//     if (!ctx) {
-//       return;
-//     }
-//
-//     const width = canvas.width;
-//     const height = canvas.height;
-//
-//     // Particle class
-//     class Particle {
-//       constructor(x, y) {
-//         this.x = x;
-//         this.y = y;
-//         this.vx = 0;
-//         this.vy = 0;
-//       }
-//
-//       update(field) {
-//         const fx = field[Math.floor(this.y) * width + Math.floor(this.x)].x;
-//         const fy = field[Math.floor(this.y) * width + Math.floor(this.x)].y;
-//         this.vx += fx;
-//         this.vy += fy;
-//         this.x += this.vx;
-//         this.y += this.vy;
-//
-//         if (this.x < 0) this.x += width;
-//         if (this.x >= width) this.x -= width;
-//         if (this.y < 0) this.y += height;
-//         if (this.y >= height) this.y -= height;
-//       }
-//
-//       draw(ctx) {
-//         ctx.beginPath();
-//         ctx.arc(this.x, this.y, 1, 0, Math.PI * 2);
-//         ctx.fill();
-//       }
-//     }
-//
-//     const particles: Particle[] = new Array(500)
-//       .fill(null)
-//       .map(() => new Particle(Math.random() * width, Math.random() * height));
-//
-//     const field = generateFractalNoiseField(width, height);
-//
-//     function animate() {
-//       updateParticles(particles, field);
-//       drawParticles(ctx, particles, width, height);
-//       requestAnimationFrame(animate);
-//     }
-//
-//     animate();
-//   }, []);
-//
-//   return <canvas ref={canvasRef} className="w-screen h-screen"/>;
-// };
-
-// const updateParticles = (particles, field) => {
-//   particles.forEach((particle) => {
-//     particle.update(field);
-//   });
-// };
-//
-// const drawParticles = (ctx, particles, width, height) => {
-//   ctx.clearRect(0, 0, width, height);
-//   ctx.fillStyle = 'white';
-//
-//   particles.forEach((particle) => {
-//     particle.draw(ctx);
-//   });
-// };
-
-
-// const generateFractalNoiseField = (width, height) => {
-//   // Define the flow field
-//   const field = new Array(width * height).fill(0).map(() => ({x: 0, y: 0}));
-//
-//   // Generate fractal noise
-//   const scale = 0.01;
-//   const octaves = 4;
-//   const persistence = 0.5;
-//   for (let y = 0; y < height; y++) {
-//     for (let x = 0; x < width; x++) {
-//       let value = 0;
-//       let amplitude = 1;
-//       for (let i = 0; i < octaves; i++) {
-//         const frequency = 2 ** i;
-//         const noiseValue =
-//           noise && noise.perlin2(x * scale * frequency, y * scale * frequency);
-//         value += noiseValue * amplitude;
-//         amplitude *= persistence;
-//       }
-//       const angle = value * Math.PI * 2;
-//       field[y * width + x] = {x: Math.cos(angle), y: Math.sin(angle)};
-//     }
-//   }
-//
-//   return field;
-// }
 
 export default FractalNoise;

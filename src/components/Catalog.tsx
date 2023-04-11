@@ -1,20 +1,19 @@
 import LinkStyled from "@/components/LinkStyled";
 import React from "react";
 import {CatalogProps} from "@/types";
+import {catalogLinks} from "@/data";
 
 const Catalog: React.FC<CatalogProps> = ({className}) => {
   return <div className={className}>
-    <ol>
-      <li>
-        <LinkStyled href="/demo/flow-field" label="Flow Field"/>
-      </li>
-      <li>
-        <LinkStyled href="/demo/perlin-noise" label="Perlin Noise"/>
-      </li>
-      <li>
-        <LinkStyled href="/demo/fractal-noise" label="Fractal Noise"/>
-      </li>
-    </ol>
+    <ul className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+      {catalogLinks.map(({label, href}, index) => {
+        return (
+          <li key={index} className="mb-8">
+            <LinkStyled href={href} label={`${index + 1}. ${label}`}/>
+          </li>
+        )
+      })}
+    </ul>
   </div>
 }
 
