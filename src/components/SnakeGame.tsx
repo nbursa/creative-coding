@@ -88,14 +88,14 @@ const SnakeGame = () => {
 
   return (
     <div className="flex flex-col justify-center items-center w-screen md:pt-[10vh]">
-      <div className="absolute top-4 left-4 font-bold text-xl text-white">
-        <div>
-          Score: {score}, Frame Rate: {frameRate}
-        </div>
-        <button onClick={handleReset} className="px-4 text-sm border rounded-md">Reset Game</button>
+      <div className="absolute top-12 mx-auto font-bold text-xl text-white">
+        Score: {score}
       </div>
       {isDead && <div
-          className="absolute top-20 bottom-0 left-0 right-0 flex justify-center items-center bg-black z-10">DEAD!</div>}
+          className="absolute top-1/2 left-1/2 transform rounded-md p-4 -translate-y-1/4 -translate-x-1/2 flex flex-col justify-center items-center bg-black z-10">
+          <div className="mb-4">Snake is DEAD! You killed it!</div>
+          <button onClick={handleReset} className="px-4 py-2 text-sm border rounded-md">Ok, Reset Game</button>
+      </div>}
       <div
         className="relative border border-gray-600"
         ref={(el) => setCanvas(el)}
