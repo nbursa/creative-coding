@@ -4,13 +4,10 @@ type FractalTreeProps = {
   iterations: number;
 };
 
-let hue = 0;
-let lightness = 20;
 const hueShift = 20;
 const lightnessShift = 0;
 const angleShift = Math.PI / 5;
 const canvasSize = 500;
-const maxIterations = 10;
 
 const drawBranch = (
   ctx: CanvasRenderingContext2D,
@@ -20,7 +17,7 @@ const drawBranch = (
   angle: number,
   width: number,
   generation: number,
-  maxIterations: number,
+  maxIterations: number = 10,
   hue: number,
   lightness: number
 ): void => {
@@ -35,9 +32,11 @@ const drawBranch = (
   ctx.moveTo(0, 0);
   ctx.lineTo(0, -len);
   ctx.stroke();
+
   const newHue = hue + hueShift;
   const newLightness = lightness + lightnessShift;
   generation++;
+
   drawBranch(
     ctx,
     0,
@@ -65,10 +64,9 @@ const drawBranch = (
   ctx.restore();
 };
 
-
 const FractalTree: React.FC<FractalTreeProps> = ({iterations}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [angle, setAngle] = useState(Math.PI / 4);
+  const [angle, setAngle] = useState(0);
   const [hue, setHue] = useState(0);
   const [lightness, setLightness] = useState(20);
 
@@ -77,53 +75,40 @@ const FractalTree: React.FC<FractalTreeProps> = ({iterations}) => {
       const ctx = canvasRef.current.getContext("2d");
       if (ctx) {
         ctx.clearRect(0, 0, canvasSize, canvasSize);
-        drawBranch(
-          ctx,
-          canvasSize / 2,
-          canvasSize - 50,
-          100,
-          -Math.PI / 2,
-          10,
-          0,
-          iterations,
-          hue,
-          lightness
-        );
+        const startX = canvasSize / 2;
+        const startY = canvasSize - 250;
+        const len = canvasSize / 6;
+        const width = 3;
+        drawBranch(ctx, startX, startY, len, angle, width, 0, iterations, hue, lightness);
       }
     }
-  }, [iterations, hue, lightness]);
+  }, [iterations, hue, lightness, angle]);
 
-
-  const handleMinusClick = () => {
+  const handleDecreaseAngleClick = () => {
     setAngle((prevAngle) => prevAngle - 0.1);
     setHue((prevHue) => prevHue + hueShift);
     setLightness((prevLightness) => prevLightness + lightnessShift);
   };
 
-  const handlePlusClick = () => {
+  const handleIncreaseAngleClick = () => {
     setAngle((prevAngle) => prevAngle + 0.1);
     setHue((prevHue) => prevHue - hueShift);
     setLightness((prevLightness) => prevLightness - lightnessShift);
   };
 
-
   return (
     <div className="flex flex-col justify-center">
+      <div className="flex justify-center items-center">
+        <button className="px-4 mx-2 border border-amber-100 rounded-lg" onClick={handleDecreaseAngleClick}>-</button>
+        {angle.toFixed(2)}
+        <button className="px-4 mx-2 border border-amber-100 rounded-lg" onClick={handleIncreaseAngleClick}>+</button>
+      </div>
       <canvas
         ref={canvasRef}
         width={canvasSize}
         height={canvasSize}
         style={{border: "1px solid black"}}
       />
-      <div>
-        <button className="btn border rounded w-16" onClick={handleMinusClick}>
-          -
-        </button>
-        <button className="btn border rounded w-16" onClick={handlePlusClick}>
-          +
-        </button>
-      </div>
-      {angle}
     </div>
   );
 };

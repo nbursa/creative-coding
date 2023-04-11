@@ -145,7 +145,7 @@ class Snake {
   show(p: typeof p5) {
     p.stroke(255);
     p.strokeWeight(1);
-    p.noFill();
+    p.fill("green");
     p.rect(this.x, this.y, 10, 10);
     for (let i = 0; i < this.tail.length; i++) {
       p.rect(this.tail[i].x, this.tail[i].y, 10, 10);
@@ -165,7 +165,7 @@ class Food {
   }
 
   show(p: typeof p5) {
-    p.fill(255, 0, 100);
+    p.fill("red");
     p.rect(this.pos.x, this.pos.y, 10, 10);
   }
 }

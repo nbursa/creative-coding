@@ -22,7 +22,7 @@ const DemoPage = () => {
 
   return (
     <div className="relative mt-14">
-      <h1 className="absolute top-2 left-1/2 -translate-x-1/2 text-blue-700">{formatedSlug}</h1>
+      <h1 className="fixed top-4 left-1/2 -translate-x-1/2 text-blue-700">{formatedSlug}</h1>
       <Component/>
     </div>
   );
