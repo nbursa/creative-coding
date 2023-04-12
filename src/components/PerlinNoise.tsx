@@ -1,26 +1,28 @@
 import React, {useEffect, useRef} from "react";
-import p5 from "p5";
+// import p5 from "p5";
 import {PerlinNoiseProps} from "@/types";
+
+const p5 = require("p5");
+const {Vector} = p5;
 
 const PerlinNoise: React.FC<PerlinNoiseProps> = ({p5Props, backgroundColor = "#000000", particleColor = "#ffffff"}) => {
   const perlinNoiseRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     if (perlinNoiseRef.current) {
-      new p5((p: p5) => sketch(p, p5Props, backgroundColor, particleColor), perlinNoiseRef.current);
+      new p5((p: typeof p5) => sketch(p, p5Props, backgroundColor, particleColor), perlinNoiseRef.current);
     }
   }, [p5Props, backgroundColor, particleColor]);
 
   return <div className="max-h-screen max-w-screen" ref={perlinNoiseRef}></div>;
 };
 
-const sketch = (p: p5, p5Props: any, backgroundColor: string, particleColor: string) => {
+const sketch = (p: typeof p5, p5Props: any, backgroundColor: string, particleColor: string) => {
   let inc = 0.1;
   let scl = 20;
   let cols: number, rows: number;
   let zoff = 0;
   let particles: Particle[] = [];
-  let flowfield: p5.Vector[];
+  let flowfield: typeof Vector[];
 
   p.setup = () => {
     p.createCanvas(p.windowWidth, p.windowHeight);
@@ -65,13 +67,13 @@ const sketch = (p: p5, p5Props: any, backgroundColor: string, particleColor: str
   };
 
   class Particle {
-    pos: p5.Vector;
-    vel: p5.Vector;
-    acc: p5.Vector;
+    pos: typeof p5.Vector;
+    vel: typeof p5.Vector;
+    acc: typeof p5.Vector;
     maxSpeed: number;
     color: string;
 
-    constructor(p: p5, color: string) {
+    constructor(p: typeof p5, color: string) {
       this.pos = p.createVector(p.random(p.width), p.random(p.height));
       this.vel = p.createVector(0, 0);
       this.acc = p.createVector(0, 0);
@@ -79,7 +81,7 @@ const sketch = (p: p5, p5Props: any, backgroundColor: string, particleColor: str
       this.color = color;
     }
 
-    follow(vectors: p5.Vector[]) {
+    follow(vectors: typeof p5.Vector[]) {
       let x = p.floor(this.pos.x / scl);
       let y = p.floor(this.pos.y / scl);
       let index = x + y * cols;
@@ -87,7 +89,7 @@ const sketch = (p: p5, p5Props: any, backgroundColor: string, particleColor: str
       this.applyForce(force);
     }
 
-    applyForce(force: p5.Vector) {
+    applyForce(force: typeof p5.Vector) {
       this.acc.add(force);
     }
 
