@@ -1,10 +1,9 @@
-import {createServer} from 'http';
-import next from 'next';
-import {parse} from 'url';
-
+const {createServer} = require('http');
+const next = require('next')
+const {parse} = require('url');
 const dev = process.env.NODE_ENV !== 'production';
 const hostname = 'localhost';
-const port = Number(process.env.PORT) || 3000;
+const port = Number(process.env.PORT) || 5678;
 const app = next({dev, hostname, port});
 const handle = app.getRequestHandler();
 
@@ -27,15 +26,15 @@ async function handleRequest(
     } catch (err) {
         console.error('Error occurred handling', req.url, err);
         res.statusCode = 500;
-        res.end('internal server error');
+        res.end('Node - internal server error');
     }
 }
 
 app.prepare().then(() => {
     createServer(handleRequest).listen(port, (err) => {
         if (err) throw err;
-        console.log(`> Ready on http://${hostname}:${port}`);
+        console.log(`> Ready on https://${hostname}:${port}`);
     });
 });
 
-export {};
+module.exports = {};
