@@ -66,7 +66,6 @@ interface JournalEntryType {
 
 const BlogPage: React.FC = () => {
   const {slug} = useRouter().query;
-  console.log("slug: ", slug);
   const API_URL = `http://localhost:1337/api/blog-posts/${slug!}`;
   const token = "Bearer " + process.env.NEXT_PUBLIC_STRAPI_JWT_TOKEN;
   const [post, setPost] = React.useState<JournalEntryType>({id: null, attributes: null})
@@ -80,7 +79,6 @@ const BlogPage: React.FC = () => {
           }
         });
         const {data} = await res.json();
-        console.log("data: ", data);
         if (data) {
           setPost(data);
         } else {
