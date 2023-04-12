@@ -1,50 +1,21 @@
 import {useEffect, useRef} from 'react';
-import p5 from 'p5';
+
+const p5 = require('p5');
+const {Vector} = require('p5');
+
 
 const FractalNoise: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // useEffect(() => {
-  //   const canvas = canvasRef.current;
-  //   if (!canvas) {
-  //     return;
-  //   }
-  //   const sketch = (p: p5) => {
-  //     let particles: Particle[] = [];
-  //     let field: p5.Vector[] = [];
-  //
-  //     p.setup = () => {
-  //       const width = p.windowWidth;
-  //       const height = p.windowHeight;
-  //       p.createCanvas(width, height);
-  //       particles = new Array(500)
-  //         .fill(null)
-  //         .map(() => createParticle(p.random(width), p.random(height)));
-  //
-  //       field = generateFractalNoiseField(width, height);
-  //
-  //       p.noStroke();
-  //     };
-  //
-  //     p.draw = () => {
-  //       updateParticles(particles, field, p);
-  //       p.background(0, 10);
-  //       particles.forEach((particle) => {
-  //         particle.draw(p);
-  //       });
-  //     };
-  //   };
-  //   new p5(sketch, canvas);
-  // }, []);
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) {
       return;
     }
 
-    const sketch = (p: p5) => {
+    const sketch = (p: typeof p5) => {
       let particles: Particle[] = [];
-      let field: p5.Vector[] = [];
+      let field: typeof Vector[] = [];
 
       p.setup = () => {
         const width = p.windowWidth;
@@ -72,46 +43,21 @@ const FractalNoise: React.FC = () => {
     new p5(sketch, canvas);
   }, []);
 
-  return <canvas ref={canvasRef} className="w-screen h-screen bg-gray-800"/>;
+  return <canvas ref={canvasRef} className="w-screen h-screen"/>;
 };
 
 type Particle = {
-  position: p5.Vector;
-  velocity: p5.Vector;
+  position: typeof Vector;
+  velocity: typeof Vector;
   color: string;
-  update(field: p5.Vector[], p: p5): void;
-  draw(p: p5): void;
+  update(field: typeof Vector[], p: typeof p5): void;
+  draw(p: typeof p5): void;
 };
 
-// const createParticle = (x: number, y: number): Particle => {
-//   const position = new p5.Vector(x, y);
-//   // const velocity = new p5.Vector().set(0, 0);
-//   const color = '#fff';
-//   const velocity = new p5.Vector().set(p.random(-1, 1), p.random(-1, 1));
-//
-//   return {
-//     position,
-//     velocity,
-//     color,
-//     update(field, p) {
-//       const x = Math.floor(this.position.x);
-//       const y = Math.floor(this.position.y);
-//       const index = y * p.width + x;
-//       const force = field[index];
-//       this.velocity.add(force);
-//       this.position.add(this.velocity);
-//       this.velocity.mult(0.95);
-//     },
-//     draw(p) {
-//       p.fill(this.color);
-//       p.circle(this.position.x, this.position.y, 1);
-//     },
-//   };
-// };
-const createParticle = (x: number, y: number, p: p5): Particle => {
+const createParticle = (x: number, y: number, p: typeof p5): Particle => {
   const position = new p5.Vector(x, y);
-  const velocity = new p5.Vector().set(p.random(-1, 1), p.random(-1, 1));
-  const color = '#fff';
+  const velocity = new p5.Vector(0, 0);
+  const color = 'rgba(255, 255, 255, 0.5)';
 
   return {
     position,
@@ -123,6 +69,7 @@ const createParticle = (x: number, y: number, p: p5): Particle => {
       const index = y * p.width + x;
       const force = field[index];
       this.velocity.add(force);
+      this.velocity.limit(2);
       this.position.add(this.velocity);
       this.velocity.mult(0.95);
     },
@@ -134,7 +81,7 @@ const createParticle = (x: number, y: number, p: p5): Particle => {
 };
 
 
-const updateParticles = (particles: Particle[], field: p5.Vector[], p: p5) => {
+const updateParticles = (particles: Particle[], field: typeof Vector[], p: typeof p5) => {
   particles.forEach((particle) => {
     particle.update(field, p);
   });
@@ -157,7 +104,7 @@ class CustomVector extends p5.Vector {
 
 
 const generateFractalNoiseField = (
-  p: p5,
+  p: typeof p5,
   width: number,
   height: number
 ): CustomVector[] => {

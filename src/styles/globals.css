@@ -30,5 +30,5 @@ body {
 
 .text-shadow:hover {
     transition: text-shadow 0.25s ease-in-out;
-    text-shadow: 0 0 30px rgb(var(--foreground-rgb));
+    text-shadow: 0 0 30px rgba(255, 165, 0, 1);
 }
