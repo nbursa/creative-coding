@@ -10,30 +10,24 @@ const LetterPatterns: LetterPattern = {};
 // Generate letter patterns for each character
 for (let i = 0; i < alphabet.length; i++) {
   const char = alphabet[i];
-  LetterPatterns[char] = generateLetterPattern(char);
+  LetterPatterns[char] = generateLetterPattern();
 }
 
 // Generate number patterns for each digit
 for (let i = 0; i < numbers.length; i++) {
   const digit = numbers[i];
-  LetterPatterns[digit] = generateLetterPattern(digit);
+  LetterPatterns[digit] = generateLetterPattern();
 }
 
-function generateLetterPattern(): LetterPattern {
-  const letterPatterns: LetterPattern = {};
-
-  // Generate patterns for letters
-  for (let i = 65; i <= 90; i++) {
-    const letter = String.fromCharCode(i);
-    letterPatterns[letter] = letterData[letter];
+function generateLetterPattern(): number[][] {
+  const letterPattern: number[][] = [];
+  for (let i = 0; i < 7; i++) {
+    letterPattern[i] = [];
+    for (let j = 0; j < 5; j++) {
+      letterPattern[i][j] = 0;
+    }
   }
-
-  // Generate patterns for digits
-  for (let i = 0; i <= 9; i++) {
-    letterPatterns[i.toString()] = letterData[i.toString()];
-  }
-
-  return letterPatterns;
+  return letterPattern;
 }
 
 export default LetterPatterns;

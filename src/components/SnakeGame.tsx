@@ -9,6 +9,7 @@ const SnakeGame = () => {
   const [frameRate, setFrameRate] = useState(5);
   const [isDead, setIsDead] = useState(false);
   const isDeadRef = useRef(isDead);
+  const p5Instance = useRef<typeof p5>();
 
   const onGameOver = () => {
     setIsDead(true);
@@ -21,11 +22,14 @@ const SnakeGame = () => {
     const h = p.height / rows;
     let snake = new Snake(p);
     let food = new Food(p, cols, rows)
+    let canvasSize: number;
 
     p.setup = () => {
       const w = window.innerWidth
       const h = window.innerHeight
-      window.innerWidth > 768 ? p.createCanvas(w / 2, h / 2) : p.createCanvas(w - 80, h - 80)
+      canvasSize = Math.min(w - 20, h - 20);
+      w > 768 ? p.createCanvas(500, 500) : p.createCanvas(canvasSize, canvasSize)
+      // p.createCanvas(canvasSize, canvasSize);
       p.frameRate(frameRate)
     };
 
@@ -69,26 +73,26 @@ const SnakeGame = () => {
   };
 
   useEffect(() => {
-    if (canvas) {
-      canvas.innerHTML = '';
-      new p5(sketch, canvas);
+    if (canvas && !p5Instance.current) {
+      p5Instance.current = new p5(sketch, canvas);
     }
-  }, [canvas]);
+  }, [canvas, sketch]);
 
   const handleReset = () => {
     setScore(0);
-    setFrameRate(5)
+    setFrameRate(5);
     setIsDead(false);
-    if (canvas) {
-      canvas.innerHTML = '';
-      new p5(sketch, canvas);
+    if (p5Instance.current) {
+      p5Instance.current.remove();
+      p5Instance.current = undefined;
+      canvas!.innerHTML = '';
+      p5Instance.current = new p5(sketch, canvas);
     }
   };
 
-
   return (
-    <div className="flex flex-col justify-center items-center w-screen md:pt-[10vh]">
-      <div className="absolute top-12 mx-auto font-bold text-xl text-white">
+    <div className="flex flex-col justify-center items-center w-screen">
+      <div className="absolute top-12 mx-auto font-bold text-xl text-white z-10">
         Score: {score}
       </div>
       {isDead && <div

@@ -1,8 +1,10 @@
 import {useEffect, useRef, useState} from "react";
-import p5 from "p5";
+// import p5 from "p5";
 import {PixelLetterProps} from "@/types";
 // import {letterPatterns} from "@/data/letter-patterns";
 import LetterPatterns from "@/utils/letter-patterns"
+
+const p5 = require("p5");
 
 const PixelLetter: React.FC<PixelLetterProps> = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -15,7 +17,7 @@ const PixelLetter: React.FC<PixelLetterProps> = () => {
       return;
     }
 
-    const sketch = (p: p5) => {
+    const sketch = (p: typeof p5) => {
       const PIXEL_SIZE = 10;
       const GAP_SIZE = 1;
       const WIDTH = window.innerWidth;
