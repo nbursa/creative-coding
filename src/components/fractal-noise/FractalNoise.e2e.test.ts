@@ -1,7 +1,10 @@
-import {Page} from 'puppeteer';
+// import {Property} from "csstype";
+import {Page} from "puppeteer";
 
-describe('FractalNoise component', () => {
+describe('FractalNoise component', async () => {
   let page: Page;
+  // const browser = await puppeteer.launch({deviceScaleFactor: 1});
+  // const page = await browser.newPage();
 
   beforeAll(async () => {
     await page.goto('http://localhost:3000');

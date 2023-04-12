@@ -2,7 +2,7 @@ import React from 'react'
 import Link from "next/link";
 import {AnimatedButtonProps} from "@/types";
 
-const AnimatedButton: React.FC<AnimatedButtonProps> = ({label, href, className}) => {
+const AnimatedButton: React.FC<AnimatedButtonProps> = ({label = "Some CTA Label", href = "/", className}) => {
   return (
     <Link href={href}
           className={`relative bg-transparent text-white font-medium py-2 px-4 rounded-md hover:shadow-lg ${className}`}>

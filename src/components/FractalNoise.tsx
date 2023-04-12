@@ -103,6 +103,28 @@ class CustomVector extends p5.Vector {
 }
 
 
+// const generateFractalNoiseField = (
+//   p: typeof p5,
+//   width: number,
+//   height: number
+// ): CustomVector[] => {
+//   const field = new Array(width * height).fill(0).map(() => new CustomVector());
+//
+//   const scale = 0.01;
+//   const octaves = 4;
+//   const persistence = 0.5;
+//   p.noiseDetail(octaves, persistence);
+//
+//   for (let y = 0; y < height; y++) {
+//     for (let x = 0; x < width; x++) {
+//       const noiseValue = p.noise(x * scale, y * scale);
+//       const angle = noiseValue * p.TWO_PI;
+//       field[y * width + x].fromAngle(angle);
+//     }
+//   }
+//
+//   return field;
+// };
 const generateFractalNoiseField = (
   p: typeof p5,
   width: number,
@@ -110,14 +132,25 @@ const generateFractalNoiseField = (
 ): CustomVector[] => {
   const field = new Array(width * height).fill(0).map(() => new CustomVector());
 
-  const scale = 0.01;
-  const octaves = 4;
-  const persistence = 0.5;
-  p.noiseDetail(octaves, persistence);
+  const octaves = 8;
+  const falloff = 0.5;
+  const noiseScale = 0.01;
 
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
-      const noiseValue = p.noise(x * scale, y * scale);
+      let noiseValue = 0;
+      let amplitude = 1;
+      let frequency = 1;
+
+      for (let i = 0; i < octaves; i++) {
+        const nx = x * noiseScale * frequency;
+        const ny = y * noiseScale * frequency;
+        noiseValue += p.noise(nx, ny) * amplitude;
+
+        amplitude *= falloff;
+        frequency *= 2;
+      }
+
       const angle = noiseValue * p.TWO_PI;
       field[y * width + x].fromAngle(angle);
     }

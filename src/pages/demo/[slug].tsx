@@ -23,7 +23,9 @@ const DemoPage = () => {
   return (
     <div className="relative mt-14">
       <h1 className="fixed top-4 left-1/2 -translate-x-1/2 text-blue-700">{formatedSlug}</h1>
-      <Component/>
+      <div className="w-full h-full flex justify-center items-center min-h-[calc(100vh-60px)]">
+        <Component/>
+      </div>
     </div>
   );
 };
