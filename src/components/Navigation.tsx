@@ -20,8 +20,8 @@ const Navigation = () => {
             <Link href="/docs" className="text-gray-300 hover:text-gray-500 ml-4 active:text-yellow-300">
               Documentation
             </Link>
-            <Link href="/learn" className="text-gray-300 hover:text-gray-500 ml-4 active:text-yellow-300">
-              Learn
+            <Link href="/journal" className="text-gray-300 hover:text-gray-500 ml-4 active:text-yellow-300">
+              Journal
             </Link>
             <Link href="/deploy" className="text-gray-300 hover:text-gray-500 ml-4 active:text-yellow-300">
               Deployment
