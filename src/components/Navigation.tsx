@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 const Navigation = () => {
   return (
-    <nav className="bg-transparent shadow fixed w-full top-0 z-50">
+    <nav className="bg-black/75 shadow fixed w-full top-0 z-50">
       <div className="w-full px-8 py-4">
         <div className="flex justify-between">
           <div className="flex-shrink-0 flex items-center">

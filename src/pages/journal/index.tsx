@@ -1,45 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import tw from 'tailwind-styled-components';
+import React, {useEffect, useState} from "react";
 import Link from "next/link";
-
-const PageWrapper = tw.main`
-  w-full
-  min-h-screen
-  bg-black
-  flex
-  flex-col
-  justify-center
-  items-center
-  py-8
-`;
-
-const JournalEntry = tw.div`
-  w-full
-  max-w-md
-  bg-white
-  rounded-md
-  shadow-md
-  p-4
-  mb-4
-`;
-
-const JournalTitle = tw.h2`
-  text-gray-800
-  text-2xl
-  font-semibold
-  mb-2
-`;
-
-const JournalDate = tw.p`
-  text-gray-600
-  text-sm
-  mb-2
-`;
-
-const JournalContent = tw.p`
-  text-gray-800
-  leading-relaxed
-`;
 
 interface AttributesType {
   author: string;
@@ -68,8 +28,8 @@ const JournalPage: React.FC<JournalEntryType> = () => {
       try {
         const res = await fetch(API_URL, {
           headers: {
-            Authorization: token
-          }
+            Authorization: token,
+          },
         });
         const {data} = await res.json();
         if (Array.isArray(data)) {
@@ -85,19 +45,21 @@ const JournalPage: React.FC<JournalEntryType> = () => {
     fetchJournalEntries();
   }, []);
 
-
   return (
-    <PageWrapper>
-      {journalEntries.length && journalEntries.map((entry: JournalEntryType) => (
-        <Link href={`/journal/${entry.id}`} key={entry.id}>
-          <JournalEntry>
-            <JournalTitle>{entry.attributes.title}</JournalTitle>
-            <JournalDate>{entry.attributes.createdAt}</JournalDate>
-            <JournalContent>{entry.attributes.summary}</JournalContent>
-          </JournalEntry>
-        </Link>
-      ))}
-    </PageWrapper>
+    <main
+      className="w-full bg-black max-w-6xl mx-auto grid grid-cols-1 grid-rows-[masonry] gap-8 md:grid-cols-2 lg:grid-cols-4 p-8 pt-28"
+      style={{gridTemplateRows: "masonry", alignItems: "start"}}>
+      {journalEntries.length &&
+        journalEntries.map((entry: JournalEntryType) => (
+          <Link href={`/journal/${entry.id}`} key={entry.id} className="inline-block max-h-min">
+            <div className="w-full border rounded-md shadow-md p-4">
+              <h2 className="text-gray-300 text-2xl font-semibold mb-2">{entry.attributes.title}</h2>
+              <p className="text-gray-100 text-sm mb-2">{entry.attributes.createdAt}</p>
+              <p className="text-gray-300 leading-relaxed">{entry.attributes.summary}</p>
+            </div>
+          </Link>
+        ))}
+    </main>
   );
 };
 
