@@ -47,17 +47,16 @@
       "target": "api::category.category",
       "inversedBy": "blog_posts"
     },
-    "comments": {
+    "comment": {
       "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::comment.comment",
-      "mappedBy": "blog_posts"
+      "relation": "oneToMany",
+      "target": "api::comment.comment"
     },
-    "parent": {
+    "comments": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::comment.comment",
-      "mappedBy": "post"
+      "mappedBy": "blog_post"
     }
   }
 }

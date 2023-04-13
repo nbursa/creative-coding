@@ -12,12 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "blog_posts": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::blog-post.blog-post",
-      "inversedBy": "comments"
-    },
     "body": {
       "type": "text"
     },
@@ -30,12 +24,6 @@
     "status": {
       "type": "string"
     },
-    "post": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::blog-post.blog-post",
-      "inversedBy": "parent"
-    },
     "IP": {
       "type": "string"
     },
@@ -44,15 +32,27 @@
     },
     "parent": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "oneToOne",
       "target": "api::comment.comment",
+      "inversedBy": "comment"
+    },
+    "comment": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::comment.comment",
+      "inversedBy": "parent"
+    },
+    "blog_post": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::blog-post.blog-post",
       "inversedBy": "comments"
     },
-    "comments": {
+    "replies": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::comment.comment",
-      "mappedBy": "parent"
+      "target": "api::reply.reply",
+      "mappedBy": "comment"
     }
   }
 }
