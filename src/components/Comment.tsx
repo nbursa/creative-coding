@@ -30,17 +30,17 @@ const Comment: React.FC<CommentProps> = ({comment, handleReply}) => {
   };
 
   return (
-    <div className="space-y-4 border border-white rounded mb-4 px-4">
+    <div className="space-y-4 border border-[var(--color-gray)] rounded mb-4 px-4">
       <div className="my-4 flex flex-col">
-        <p className="text-xs mb-2">id: #{comment.id}</p>
+        <p className="text-xs mb-2 font-thin">id: #{comment.id}</p>
         <p className="text-sm mb-4">{comment.attributes?.body}</p>
         <small className="font-bold">by: {comment.attributes?.name}</small>
-        <small className="text-gray-500">{useFormatDate(comment.attributes?.createdAt)}</small>
+        <small className="text-gray-500 font-thin">{useFormatDate(comment.attributes?.createdAt)}</small>
         <button
-          className="text-blue-600 text-sm mt-2 max-w-min"
+          className="text-xs font-thin mt-2 max-w-min hover:underline hover:underline-offset-4"
           onClick={() => setShowReplyForm(!showReplyForm)}
         >
-          Reply
+          {!showReplyForm ? "Reply" : "Close"}
         </button>
         {showReplyForm && (
           <form onSubmit={handleSubmitReply} className="mt-4">
@@ -48,17 +48,17 @@ const Comment: React.FC<CommentProps> = ({comment, handleReply}) => {
             <input
               type="text"
               placeholder="Your name"
-              className="border p-2 rounded w-full mb-2 bg-black"
+              className="border border-[var(--color-gray)] px-2 py-1 outline-none rounded w-full mb-2 bg-[var(--color-gray)]"
               value={replyName}
               onChange={(e) => setReplyName(e.target.value)}
             />
             <textarea
               placeholder="Your reply"
-              className="border p-2 rounded w-full mb-2 bg-black"
+              className="border border-[var(--color-gray)] px-2 py-1 outline-none rounded w-full mb-2 bg-[var(--color-gray)]"
               value={replyContent}
               onChange={(e) => setReplyContent(e.target.value)}
             ></textarea>
-            <button type="submit" className="bg-blue-600 text-white py-1 px-2 rounded">
+            <button type="submit" className="bg-none text-white py-1 px-2 rounded">
               Submit reply
             </button>
           </form>

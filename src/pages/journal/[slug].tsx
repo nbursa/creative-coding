@@ -233,19 +233,20 @@ const BlogPage: React.FC = () => {
 
 
   return (
-    <div className="w-full min-h-screen bg-black p-4 pt-16">
-      <div key={post?.id}
-           className="w-full max-w-3xl mx-auto text-white rounded-md shadow-md p-8">
-        <div className="text-black mb-12">
-          <h2 className="text-gray-300 text-2xl font-semibold mb-8">{post?.attributes?.title}</h2>
+    <div className="w-full min-h-screen p-4 pt-16">
+      <h2 className="text-4xl text-center mt-8 font-semibold text-[var(--color-white)] col-span-full">Journal</h2>
+      {post?.attributes && post?.id ? <div key={post?.id}
+                                           className="w-full max-w-3xl mx-auto rounded-md shadow-md p-8">
+        <div className="mb-12">
+          <h2 className="text-2xl font-semibold mb-8">{post?.attributes?.title}</h2>
           <p
-            className="text-gray-500 mb-4">{post?.attributes?.author} / {UseFormatDate(post?.attributes?.publishedAt || undefined)}</p>
-          <p className="text-gray-300 leading-relaxed mb-2">{post?.attributes?.content}</p>
-          <p className="text-gray-100 text-sm mb-2">{post?.attributes?.author}</p>
-          <p className="text-gray-100 text-sm mb-2">{UseFormatDate(post?.attributes?.createdAt || undefined)}</p>
+            className="mb-4">{post?.attributes?.author} / {UseFormatDate(post?.attributes?.publishedAt || undefined)}</p>
+          <p className="leading-relaxed mb-2">{post?.attributes?.content}</p>
+          <p className="text-sm mb-2">{post?.attributes?.author}</p>
+          <p className="text-sm mb-2">{UseFormatDate(post?.attributes?.createdAt || undefined)}</p>
         </div>
-        <div className="text-gray-100">
-          <div className="mb-2 font-semibold text-xl">Comments</div>
+        <div className="">
+          <div className="mb-2 text-xl">Comments</div>
           {post?.attributes?.comments?.data.map((comment: CommentData, index) => (
             <Comment key={comment.id || index} comment={comment} handleReply={handleReply}/>
           ))}
@@ -255,26 +256,26 @@ const BlogPage: React.FC = () => {
               <input
                 type="text"
                 placeholder="Your name"
-                className="border p-2 rounded w-full mb-2 bg-black"
+                className="border border-[var(--color-gray)] px-2 py-1 outline-none rounded w-full mb-2 bg-[var(--color-gray)]"
                 value={newCommentName}
                 onChange={(e) => setNewCommentName(e.target.value)}
               />
               <textarea
                 placeholder="Your comment"
-                className="border p-2 rounded w-full mb-2 bg-black"
+                className="border border-[var(--color-gray)] px-2 py-1 outline-none rounded w-full mb-2 bg-[var(--color-gray)]"
                 value={newCommentContent}
                 onChange={(e) => setNewCommentContent(e.target.value)}
               ></textarea>
             </div>
             <button
               type="submit"
-              className="bg-black text-white py-1 px-2 rounded"
+              className="bg-none text-white py-1 px-2 rounded"
             >
               Submit comment
             </button>
           </form>
         </div>
-      </div>
+      </div> : <div className="w-full mt-12 flex justify-center items-center">No journal data</div>}
     </div>
   );
 

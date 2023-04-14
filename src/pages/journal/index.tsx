@@ -47,8 +47,9 @@ const JournalPage: React.FC<JournalEntryType> = () => {
 
   return (
     <main
-      className="w-full bg-black max-w-6xl mx-auto grid grid-cols-1 grid-rows-[masonry] gap-8 md:grid-cols-2 lg:grid-cols-4 p-8 pt-28"
+      className="w-full max-w-6xl mx-auto grid grid-cols-1 grid-rows-[masonry] gap-8 md:grid-cols-2 lg:grid-cols-4 p-8 pt-28"
       style={{gridTemplateRows: "masonry", alignItems: "start"}}>
+      <h2 className="text-4xl font-semibold text-gray-300 col-span-full">Journals</h2>
       {journalEntries.length &&
         journalEntries.map((entry: JournalEntryType) => (
           <Link href={`/journal/${entry.id}`} key={entry.id} className="inline-block max-h-min">
@@ -58,7 +59,7 @@ const JournalPage: React.FC<JournalEntryType> = () => {
               <p className="text-gray-300 leading-relaxed">{entry.attributes.summary}</p>
             </div>
           </Link>
-        ))}
+        )) || <div className="w-screen h-full flex justify-center items-center">No journal entries found.</div>}
     </main>
   );
 };
