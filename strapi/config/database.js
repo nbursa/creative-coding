@@ -1,6 +1,6 @@
 const path = require('path');
 
-module.exports = ({ env }) => {
+module.exports = ({env}) => {
   const client = env('DATABASE_CLIENT', 'sqlite');
 
   const connections = {
@@ -24,7 +24,7 @@ module.exports = ({ env }) => {
           ),
         },
       },
-      pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
+      pool: {min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10)},
     },
     mysql2: {
       connection: {
@@ -45,7 +45,7 @@ module.exports = ({ env }) => {
           ),
         },
       },
-      pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
+      pool: {min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10)},
     },
     postgres: {
       connection: {
@@ -68,7 +68,7 @@ module.exports = ({ env }) => {
         },
         schema: env('DATABASE_SCHEMA', 'public'),
       },
-      pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
+      pool: {min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10)},
     },
     sqlite: {
       connection: {
@@ -82,9 +82,16 @@ module.exports = ({ env }) => {
     },
   };
 
+  console.log('Database configuration:', {
+    connection: {
+      client, ...connections[client],
+      acquireConnectionTimeout: env.int('DATABASE_CONNECTION_TIMEOUT', 60000)
+    }
+  });
+
   return {
     connection: {
-      client,
+      client: client || 'sqlite',
       ...connections[client],
       acquireConnectionTimeout: env.int('DATABASE_CONNECTION_TIMEOUT', 60000),
     },
