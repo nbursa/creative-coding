@@ -39,6 +39,7 @@
 }
 
 body {
+    font-size: calc(16px + 0.5vw);
     color: var(--foreground);
     background: var(--background);
 }

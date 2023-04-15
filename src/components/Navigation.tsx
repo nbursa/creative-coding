@@ -13,15 +13,15 @@ const Navigation = () => {
               </a>
             </Link>
           </div>
-          <div className="hidden sm:flex sm:items-center sm:ml-6">
+          <div className="hidden sm:flex sm:items-center sm:ml-6 text-sm">
             <Link href="/demo" className="text-gray-300 hover:text-gray-500 ml-4 active:text-yellow-300">
               Templates
             </Link>
             <Link href="/docs" className="text-gray-300 hover:text-gray-500 ml-4 active:text-yellow-300">
               Documentation
             </Link>
-            <Link href="/journal" className="text-gray-300 hover:text-gray-500 ml-4 active:text-yellow-300">
-              Journal
+            <Link href="/blog" className="text-gray-300 hover:text-gray-500 ml-4 active:text-yellow-300">
+              Blog
             </Link>
             <Link href="/deploy" className="text-gray-300 hover:text-gray-500 ml-4 active:text-yellow-300">
               Deployment

@@ -1,0 +1,38 @@
+scalar JSON
+scalar Date
+
+type Reply {
+    id: ID!
+    name: String!
+    body: String!
+    createdAt: Date!
+}
+
+type BlogPost {
+    id: ID!
+    title: String!
+    author: String!
+    content: String!
+    createdAt: Date!
+    publishedAt: Date!
+    comments: [Comment!]!
+}
+
+type Comment {
+    id: ID!
+    name: String!
+    body: String!
+    createdAt: Date!
+    replies: [Comment!]!
+}
+
+type Query {
+    blogPosts(slug: String!): [BlogPost]
+}
+
+input createCommentInput {
+    name: String!
+    body: String!
+    postId: ID!
+    parentCommentId: ID
+}

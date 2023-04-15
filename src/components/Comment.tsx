@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {CommentData} from '@/pages/journal/[slug]';
+import {CommentDataType} from '@/types';
 import useFormatDate from '@/hooks/use-format-date';
 
 interface CommentProps {
-  comment: CommentData;
+  comment: CommentDataType;
   handleReply: (parentId: number, name: string, content: string) => Promise<void>;
 }
 

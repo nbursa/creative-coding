@@ -1,0 +1,54 @@
+import React, {useEffect, useState} from "react";
+import Link from "next/link";
+import {BlogEntryType} from "@/types";
+
+
+const BlogPage: React.FC<BlogEntryType> = () => {
+  const [journalEntries, setJournalEntries] = useState<BlogEntryType[]>([]);
+  const API_URL = "http://localhost:1337/api/blog-posts";
+  const token = "Bearer " + process.env.NEXT_PUBLIC_STRAPI_JWT_TOKEN;
+
+  useEffect(() => {
+    const fetchJournalEntries = async () => {
+      try {
+        const res = await fetch(API_URL, {
+          headers: {
+            Authorization: token,
+          },
+        });
+        const {data} = await res.json();
+        if (Array.isArray(data)) {
+          setJournalEntries(data as BlogEntryType[]);
+        } else {
+          console.log("Invalid data format: ", data);
+        }
+      } catch (error) {
+        console.log("Error fetching data: ", error);
+      }
+    };
+
+    fetchJournalEntries();
+  }, [token]);
+
+  return (
+    <main
+      className="w-full max-w-screen-sm lg:max-w-screen-2xl xl:max-w-[75%] mx-auto grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4 p-8 pt-28">
+      <h2 className="text-4xl font-semibold text-gray-300 col-span-full">Blog</h2>
+      {journalEntries.length &&
+        journalEntries.map((entry: BlogEntryType) => (
+          <Link href={`/blog/${entry.id}`} key={entry.id}
+                className="group inline-block max-h-min hover:transform hover:-translate-y-2">
+            <div
+              className="w-full border border-[var(--color-gray)] rounded-md shadow-md p-4 group-hover:shadow-[0_0_10px_10px_rgba(255,255,255,0.005)]">
+              <h2 className="text-gray-300 text-2xl font-semibold mb-2">{entry?.attributes?.title}</h2>
+              <p
+                className="text-gray-100 mb-2 text-xs">{entry?.attributes?.createdAt ? new Date(entry.attributes.createdAt).toLocaleDateString() : ""}</p>
+              <p className="text-gray-300 leading-relaxed text-sm">{entry?.attributes?.summary}</p>
+            </div>
+          </Link>
+        )) || <div className="w-screen h-full flex justify-center items-center">No journal entries found.</div>}
+    </main>
+  );
+};
+
+export default BlogPage;
