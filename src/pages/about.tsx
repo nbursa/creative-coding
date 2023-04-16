@@ -3,7 +3,7 @@ import ChatGPTInputForm from '@/components/chatgpt/ChatGPTInputForm';
 
 const Home: React.FC = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
+    <main className="flex min-h-screen flex-col items-center p-24 pb-0">
       <h1 className="text-center text-4xl font-bold mt-8 mb-4">
         ChatGPT API
       </h1>

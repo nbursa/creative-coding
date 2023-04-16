@@ -7,17 +7,23 @@ interface ConversationItem {
   aiResponse: string;
 }
 
-console.log(apiConfig)
 const configuration = new Configuration({
   apiKey: apiConfig.apiKey,
 });
-console.log(configuration)
 const openai = new OpenAIApi(configuration);
 
 const ChatGPTInputForm: React.FC = () => {
   const [input, setInput] = useState('');
   const [conversation, setConversation] = useState<ConversationItem[]>([]);
   const messagesRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const inputElement = inputRef.current;
+    if (inputElement) {
+      inputElement.focus();
+    }
+  }, [input]);
 
   useEffect(() => {
     const messagesElement = messagesRef.current;
@@ -32,30 +38,29 @@ const ChatGPTInputForm: React.FC = () => {
 
     if (!input.trim()) return;
 
-    let prompt = "Create a personalized ChatGPT model that imitates my writing style, interests, and communication preferences. Provide tips on how to effectively build and develop full stack applications using nodejs, javascript and css. My name is Nenad. \nUser: Who are you?\nAI: My name is Nenad, I am frontend developer from Belgrade, Serbia with 8 years of professional development experience working with popular frontend frameworks and libraries";
+    let prompt = "Create a personalized ChatGPT model that imitates my writing style, interests, and communication preferences. Provide tips on how to effectively build and develop full stack applications using nodejs, javascript and css. Provide any code from response wrapped in triple backticks (```). Your name is Nenad. \nUser: Who are you?\nAI: My name is Nenad, I am frontend developer from Belgrade, Serbia with 8 years of professional development experience working with popular frontend frameworks and libraries";
 
-    const userPrompt = `${input}`;
-    const aiPrompt = ``;
-
-    prompt = `${prompt}\nUser: ${userPrompt}\nAI: ${aiPrompt}`
-    const finalPrompt = `${prompt}`;
+    const userPrompt = `User: ${input}`;
+    const aiPrompt = `AI: `;
+    const finalPrompt = `${prompt}\n${userPrompt}\n${aiPrompt}`;
 
     try {
-      const response = await openai.createCompletion({
-        model: 'text-davinci-003',
-        // model: 'gpt-3.5-turbo',
-        prompt: finalPrompt,
-        temperature: 0,
-        max_tokens: 100,
+      const response = await openai.createChatCompletion({
+        model: 'gpt-3.5-turbo',
+        messages: [
+          {role: "system", content: "You are a helpful assistant."},
+          {role: "user", content: finalPrompt},
+        ],
+        max_tokens: 1000,
+        temperature: 0.7,
         top_p: 1,
         frequency_penalty: 0.0,
         presence_penalty: 0.0,
-        stop: ['\n'],
+        // stop: ['\n'],
+        // stop: ["User:"]
       });
 
-      const aiResponse = response?.data?.choices?.[0]?.text?.trim() ?? "";
-
-      // console.log("aiResponse", finalPrompt)
+      const aiResponse = response?.data?.choices?.[0]?.message?.content?.trim() ?? "";
 
       const newItem: ConversationItem = {
         userPrompt: userPrompt,
@@ -78,19 +83,23 @@ const ChatGPTInputForm: React.FC = () => {
   return (
     <div className="w-full h-full p-4 justify-between">
       <div ref={messagesRef}
-           className="min-h-[45vh] max-h-[45vh] grid grid-cols-1 overflow-hidden overflow-y-auto">
+           className="min-h-[60vh] max-h-[60vh] grid grid-cols-1 overflow-hidden overflow-y-auto">
         {conversation.map((item, index) => (
           <div key={index}
-               className="shrink mb-2 p-2 rounded-lg grid grid-cols-[15px_1fr] grid-rows-1 gap-2 max-w-full min-w-full max-h-min order-last">
+               className="shrink mb-2 p-2 grid grid-cols-[15px_1fr] grid-rows-1 gap-2 max-w-full min-w-full max-h-min order-last border-t">
             <div className="">{index + 1}</div>
             <div className="w-full h-full flex-wrap">
-              <div className="grid gap-1 grid-cols-[50px_1fr]">
+              <div className="grid gap-1 grid-cols-[50px_1fr] mb-4">
                 <div className="">Q:</div>
-                <div className="whitespace-pre break-words">{item.userPrompt}</div>
+                <div className="whitespace-pre break-words">
+                  <pre className="whitespace-pre-line">{item.userPrompt}</pre>
+                </div>
               </div>
               <div className="grid gap-1 grid-cols-[50px_1fr]">
                 <div className="">AI:</div>
-                <div className="">{item.aiResponse}</div>
+                <div className="">
+                  <pre className="whitespace-pre-line">{item.aiResponse}</pre>
+                </div>
               </div>
             </div>
           </div>
@@ -98,6 +107,7 @@ const ChatGPTInputForm: React.FC = () => {
       </div>
       <form onSubmit={handleSubmit} className="flex justify-between items-center">
         <input
+          ref={inputRef}
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
