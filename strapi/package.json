@@ -1,5 +1,5 @@
 {
-  "name": "strapi",
+  "name": "react-js-creative-coding-strapi",
   "private": true,
   "version": "0.1.0",
   "description": "A Strapi application",
@@ -12,20 +12,21 @@
     "start:prod": "NODE_ENV=production npm start"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.4",
-    "@babel/eslint-parser": "^7.21.3",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^8.38.0"
+    "@babel/eslint-parser": "^7.21.3"
   },
   "dependencies": {
+    "@strapi/plugin-i18n": "4.9.1",
+    "@strapi/plugin-users-permissions": "4.9.1",
     "@strapi/strapi": "4.9.1",
-    "sqlite3": "^5.1.6"
+    "better-sqlite3": "8.0.1",
+    "mysql": "^2.18.1",
+    "pg": "^8.10.0"
   },
   "author": {
-    "name": "A Strapi developer"
+    "name": "Nenad"
   },
   "strapi": {
-    "uuid": "2ab9a2bc-3a9d-489a-82ac-a63a822874b7"
+    "uuid": "23241277-a652-493a-bbb6-cbf795304d49"
   },
   "engines": {
     "node": ">=14.19.1 <=18.x.x",
