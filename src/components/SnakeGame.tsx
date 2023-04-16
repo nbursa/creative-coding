@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 
 const p5 = require('p5');
 const {Vector} = require('p5');
@@ -15,7 +15,7 @@ const SnakeGame = () => {
     setIsDead(true);
   };
 
-  const sketch = (p: typeof p5) => {
+  const sketch = useCallback((p: typeof p5) => {
     const rows = 20;
     const cols = 20;
     const w = p.width / cols;
@@ -69,7 +69,7 @@ const SnakeGame = () => {
         snake.dir(1, 0);
       }
     };
-  };
+  }, [frameRate]);
 
   useEffect(() => {
     if (canvas && !p5Instance.current) {
