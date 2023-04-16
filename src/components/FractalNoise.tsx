@@ -102,7 +102,6 @@ class CustomVector extends p5.Vector {
   }
 }
 
-
 // const generateFractalNoiseField = (
 //   p: typeof p5,
 //   width: number,
@@ -125,6 +124,7 @@ class CustomVector extends p5.Vector {
 //
 //   return field;
 // };
+
 const generateFractalNoiseField = (
   p: typeof p5,
   width: number,
@@ -158,6 +158,5 @@ const generateFractalNoiseField = (
 
   return field;
 };
-
 
 export default FractalNoise;

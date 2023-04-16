@@ -1,14 +1,11 @@
 import {useEffect, useRef, useState} from "react";
-// import p5 from "p5";
 import {PixelLetterProps} from "@/types";
-// import {letterPatterns} from "@/data/letter-patterns";
 import LetterPatterns from "@/utils/letter-patterns"
 
 const p5 = require("p5");
 
 const PixelLetter: React.FC<PixelLetterProps> = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  // const letterPatterns = LetterPatterns;
   const [selectedLetter, setSelectedLetter] = useState("A");
   console.log("letterPaterns; ", LetterPatterns)
   useEffect(() => {

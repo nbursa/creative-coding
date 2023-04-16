@@ -29,7 +29,6 @@ const SnakeGame = () => {
       const h = window.innerHeight
       canvasSize = Math.min(w - 20, h - 20);
       w > 768 ? p.createCanvas(500, 500) : p.createCanvas(canvasSize, canvasSize)
-      // p.createCanvas(canvasSize, canvasSize);
       p.frameRate(frameRate)
     };
 
@@ -96,9 +95,9 @@ const SnakeGame = () => {
         Score: {score}
       </div>
       {isDead && <div
-          className="absolute top-1/2 left-1/2 transform rounded-md p-4 -translate-y-1/4 -translate-x-1/2 flex flex-col justify-center items-center bg-black z-10">
-          <div className="mb-4">Snake is DEAD! You killed it!</div>
-          <button onClick={handleReset} className="px-4 py-2 text-sm border rounded-md">Ok, Reset Game</button>
+        className="absolute top-1/2 left-1/2 transform rounded-md p-4 -translate-y-1/4 -translate-x-1/2 flex flex-col justify-center items-center bg-black z-10">
+        <div className="mb-4">Snake is DEAD! You killed it!</div>
+        <button onClick={handleReset} className="px-4 py-2 text-sm border rounded-md">Ok, Reset Game</button>
       </div>}
       <div
         className="relative border border-gray-600"
@@ -192,7 +191,6 @@ class Snake {
     }
   }
 }
-
 
 class Food {
   pos: typeof p5.Vector;

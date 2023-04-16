@@ -1,5 +1,4 @@
 import React, {useEffect, useRef} from "react";
-// import p5 from "p5";
 import {PerlinNoiseProps} from "@/types";
 
 const p5 = require("p5");
