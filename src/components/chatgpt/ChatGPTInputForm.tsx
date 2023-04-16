@@ -7,9 +7,11 @@ interface ConversationItem {
   aiResponse: string;
 }
 
+console.log(apiConfig)
 const configuration = new Configuration({
   apiKey: apiConfig.apiKey,
 });
+console.log(configuration)
 const openai = new OpenAIApi(configuration);
 
 const ChatGPTInputForm: React.FC = () => {
@@ -41,6 +43,7 @@ const ChatGPTInputForm: React.FC = () => {
     try {
       const response = await openai.createCompletion({
         model: 'text-davinci-003',
+        // model: 'gpt-3.5-turbo',
         prompt: finalPrompt,
         temperature: 0,
         max_tokens: 100,
