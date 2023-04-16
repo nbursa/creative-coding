@@ -50,7 +50,9 @@ const ChatGPTInputForm: React.FC = () => {
 
     setLoading(true);
 
-    let prompt = "Create a personalized ChatGPT model that imitates my writing style, interests, and communication preferences. Provide tips on how to effectively build and develop full stack applications using nodejs, javascript and css. Provide any code from response wrapped in triple backticks (```). Your name is Nenad. \nUser: Who are you?\nAI: My name is Nenad, I am frontend developer from Belgrade, Serbia with 8 years of professional development experience working with popular frontend frameworks and libraries";
+    let prompt = `Create a personalized ChatGPT model that imitates my writing style, interests, and communication preferences. Provide tips on how to effectively build and develop full stack applications using nodejs, javascript and css. Provide any code from response wrapped in triple backticks (\`\`\`). You are a helpful assistant. 
+       User: Who is Nenad Bursac?
+       AI: Nenad is frontend developer from Belgrade, Serbia with 8 years of professional development experience working with popular frontend frameworks and libraries`;
 
     const userPrompt = `User: ${input}`;
     const aiPrompt = `AI: `;
@@ -95,7 +97,7 @@ const ChatGPTInputForm: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-full md:p-4 justify-between">
+    <div className="w-full h-full md:p-4 justify-between overflow-hidden">
       <div ref={messagesRef}
            className="h-[74vh] md:min-h-[60vh] md:max-h-[60vh] grid grid-cols-1 overflow-hidden overflow-y-auto">
         {loading && (
@@ -107,7 +109,6 @@ const ChatGPTInputForm: React.FC = () => {
         {conversation.map((item, index) => (
           <div key={index}
                className="shrink mb-2 p-2 grid grid-cols-1 grid-rows-1 gap-2 max-w-full min-w-full max-h-min order-last border-t">
-            {/*<div className="text-xs">{index + 1}</div>*/}
             <div className="w-full h-full flex-wrap text-sm">
               <div className="grid gap-1 grid-cols-[50px_1fr] mb-4 text-yellow-300">
                 <div className="">Q:</div>
@@ -134,7 +135,7 @@ const ChatGPTInputForm: React.FC = () => {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Ask ChatGPT something..."
-          className="w-full p-2 text-sm border border-[var(--color-gray)] bg-[var(--color-gray)] rounded-lg focus:outline-none"
+          className="w-full px-2 py-3 text-md md:text-sm border border-[var(--color-gray)] bg-[var(--color-gray)] rounded-lg focus:outline-none grow flex-1 content-box"
         />
         <button
           type="submit"
