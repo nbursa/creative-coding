@@ -50,13 +50,13 @@ const ChatGPTInputForm: React.FC = () => {
 
     setLoading(true);
 
-    let prompt = `Create a personalized ChatGPT model that imitates my writing style, interests, and communication preferences. Provide tips on how to effectively build and develop full stack applications using nodejs, javascript and css. Provide any code from response wrapped in triple backticks (\`\`\`). You are a helpful assistant. 
-       User: Who is Nenad Bursac?
-       AI: Nenad is frontend developer from Belgrade, Serbia with 8 years of professional development experience working with popular frontend frameworks and libraries`;
+    const prompt = `As a helpful assistant, create a personalized ChatGPT model that imitates my writing style, interests, and communication preferences. Focus on providing practical advice and detailed examples when discussing how to effectively build and develop full stack applications using Node.js, JavaScript, and CSS. Enclose any code snippets in triple backticks (\`\`\`).
+
+      User: Who is Nenad Bursac?
+      AI: Nenad is a frontend developer from Belgrade, Serbia, with 8 years of professional development experience working with popular frontend frameworks and libraries.`;
 
     const userPrompt = `User: ${input}`;
-    const aiPrompt = `AI: `;
-    const finalPrompt = `${prompt}\n${userPrompt}\n${aiPrompt}`;
+    const finalPrompt = `${prompt}\n${userPrompt}`;
 
     try {
       const response = await openai.createChatCompletion({
@@ -90,6 +90,19 @@ const ChatGPTInputForm: React.FC = () => {
     }
   };
 
+  const Loader: React.FC = () => {
+    return (
+      <div className="flex items-baseline justify-start text-xs space-x-2 overflow-hidden py-1.5 px-3 rounded-lg">
+        <span className="text-xs">Generating response</span>
+        <span className="flex space-x-1">
+        <span className="loader-dot w-1 h-1 bg-white rounded-full"></span>
+        <span className="loader-dot w-1 h-1 bg-white rounded-full"></span>
+        <span className="loader-dot w-1 h-1 bg-white rounded-full"></span>
+      </span>
+      </div>
+    );
+  };
+
   const handleKeyDown = async (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       await handleSubmit(event);
@@ -100,12 +113,6 @@ const ChatGPTInputForm: React.FC = () => {
     <div className="w-full h-full md:p-4 justify-between overflow-hidden">
       <div ref={messagesRef}
            className="h-[74vh] md:min-h-[60vh] md:max-h-[60vh] grid grid-cols-1 overflow-hidden overflow-y-auto">
-        {loading && (
-          <div
-            className="absolute top-0 left-0 w-full flex items-center justify-center bg-[var(--background)]">
-            <div className="loader"></div>
-          </div>
-        )}
         {conversation.map((item, index) => (
           <div key={index}
                className="shrink mb-2 p-2 grid grid-cols-1 grid-rows-1 gap-2 max-w-full min-w-full max-h-min order-last border-t">
@@ -117,7 +124,7 @@ const ChatGPTInputForm: React.FC = () => {
                 </div>
               </div>
               <div className="grid gap-1 grid-cols-[50px_1fr] text-blue-400">
-                <div className="">AI:</div>
+                <div className="">A:</div>
                 <div className="">
                   <pre className="whitespace-pre-line">{item.aiResponse}</pre>
                 </div>
@@ -128,6 +135,12 @@ const ChatGPTInputForm: React.FC = () => {
       </div>
       <form onSubmit={handleSubmit}
             className="fixed left-0 w-full p-4 bottom-0 md:relative flex justify-between items-center">
+        {loading && (
+          <div
+            className="absolute -top-3 left-4 flex items-center justify-start bg-[var(--color-gray)] bg-opacity-90">
+            <Loader/>
+          </div>
+        )}
         <input
           ref={inputRef}
           type="text"
