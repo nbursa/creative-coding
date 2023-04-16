@@ -30,7 +30,7 @@ module.exports = {
         black: '#0F0F14',
         bluish: '#202124',
         slate: '#434C6C',
-        gray: '#828AA1',
+        grayc: '#828AA1',
         white: '#F6F6F6',
         deepPurple: '#0E0220',
         darkRed: '#2D0320',

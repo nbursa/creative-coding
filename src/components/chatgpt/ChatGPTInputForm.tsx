@@ -42,7 +42,6 @@ const ChatGPTInputForm: React.FC = () => {
     }
   }, [conversation]);
 
-
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -50,13 +49,13 @@ const ChatGPTInputForm: React.FC = () => {
 
     setLoading(true);
 
-    const prompt = `As a helpful assistant, create a personalized ChatGPT model that imitates my writing style, interests, and communication preferences. Focus on providing practical advice and detailed examples when discussing how to effectively build and develop full stack applications using Node.js, JavaScript, and CSS. Enclose any code snippets in triple backticks (\`\`\`).
+    const prompt = `As a helpful assistant, create a personalized ChatGPT model that imitates my writing style, interests, and communication preferences. Focus on providing practical advice and detailed examples when discussing various topics. Enclose any code snippets in triple backticks (\`\`\`).
 
-      User: Who is Nenad Bursac?
-      AI: Nenad is a frontend developer from Belgrade, Serbia, with 8 years of professional development experience working with popular frontend frameworks and libraries.`;
+      [User]: Who is Nenad Bursac?
+      [AI]: Nenad is a frontend developer from Belgrade, Serbia, with 8 years of professional development experience working with popular frontend frameworks and libraries.`;
 
-    const userPrompt = `User: ${input}`;
-    const finalPrompt = `${prompt}\n${userPrompt}`;
+    const userPrompt = `[User]: ${input}`;
+    const finalPrompt = `${prompt}\n${userPrompt}\n[AI]: `;
 
     try {
       const response = await openai.createChatCompletion({
@@ -65,8 +64,8 @@ const ChatGPTInputForm: React.FC = () => {
           {role: "system", content: "You are a helpful assistant."},
           {role: "user", content: finalPrompt},
         ],
-        max_tokens: 1000,
-        temperature: 0.5,
+        max_tokens: 500,
+        temperature: 1,
         top_p: 1,
         frequency_penalty: 0.0,
         presence_penalty: 0.0,
@@ -75,10 +74,11 @@ const ChatGPTInputForm: React.FC = () => {
       });
 
       const aiResponse = response?.data?.choices?.[0]?.message?.content?.trim() ?? "";
+      const formattedAiResponse = formatCodeInResponse(aiResponse);
 
       const newItem: ConversationItem = {
         userPrompt: userPrompt,
-        aiResponse: aiResponse,
+        aiResponse: `[AI]: ${formattedAiResponse}`,
       };
 
       setConversation((prevConversation) => [...prevConversation, newItem]);
@@ -88,6 +88,15 @@ const ChatGPTInputForm: React.FC = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const formatCodeInResponse = (responseText: string) => {
+    const codeRegex = /```([\s\S]*?)```/g;
+
+    return responseText.replace(
+      codeRegex,
+      (match, code) => `<pre class="response-code">${code}</pre>`
+    );
   };
 
   const Loader: React.FC = () => {
@@ -120,13 +129,13 @@ const ChatGPTInputForm: React.FC = () => {
               <div className="grid gap-1 grid-cols-[50px_1fr] mb-4 text-yellow-300">
                 <div className="">Q:</div>
                 <div className="whitespace-pre break-words">
-                  <pre className="whitespace-pre-line">{item.userPrompt}</pre>
+                  <div className="whitespace-pre-line">{item.userPrompt}</div>
                 </div>
               </div>
-              <div className="grid gap-1 grid-cols-[50px_1fr] text-blue-400">
+              <div className="grid gap-1 grid-cols-[50px_1fr] text-blue-300">
                 <div className="">A:</div>
                 <div className="">
-                  <pre className="whitespace-pre-line">{item.aiResponse}</pre>
+                  <div className="whitespace-pre-line" dangerouslySetInnerHTML={{__html: item.aiResponse}}></div>
                 </div>
               </div>
             </div>
@@ -148,11 +157,15 @@ const ChatGPTInputForm: React.FC = () => {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Ask ChatGPT something..."
-          className="w-full px-2 py-3 text-md md:text-sm border border-[var(--color-gray)] bg-[var(--color-gray)] rounded-lg focus:outline-none grow flex-1 content-box"
+          className={`w-full px-2 py-3 text-md md:text-sm border border-[var(--color-gray)] bg-[var(--color-gray)] rounded-lg focus:outline-none grow flex-1 content-box placeholder:italic placeholder:text-gray-500 ${
+            loading ? 'text-gray-500' : ''
+          }`}
+          disabled={loading}
         />
         <button
           type="submit"
-          className="ml-4 px-4 py-2 text-white bg-[var(--color-gray)] rounded-lg hover:brightness-125 focus:outline-none"
+          className="ml-4 px-4 py-3.5 text-sm text-white text-thin bg-[var(--color-gray)] rounded-lg hover:brightness-125 focus:outline-none disabled:text-opacity-50 disabled:hover:brightness-100"
+          disabled={loading}
         >
           Send
         </button>

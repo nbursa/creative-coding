@@ -9,7 +9,7 @@ const Catalog: React.FC<CatalogProps> = ({className}) => {
       {catalogLinks.map(({label, href}, index) => {
         return (
           <li key={index} className="mb-8 text-center md:text-left text-2xl px-5 py-4">
-            <LinkStyled href={href} label={`${index + 1}. ${label}`}/>
+            <LinkStyled href={href} label={label}/>
           </li>
         )
       })}

@@ -82,3 +82,14 @@ body {
         transform: scale(1);
     }
 }
+
+.response-code {
+    background-color: var(--background);
+    color: var(--foreground);
+    border-radius: 3px;
+    padding: 0.5rem;
+    /*font-family: 'Courier New', monospace;*/
+    font-family: 'Fira Mono', monospace;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}

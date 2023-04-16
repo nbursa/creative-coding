@@ -7,7 +7,7 @@ import AnimatedButton from "@/components/AnimatedButton";
 import Cards from "@/components/Cards";
 import Catalog from "@/components/Catalog";
 import LinkStyled from "@/components/LinkStyled";
-import Navigation from "@/components/Navigation";
+import Navigation from "@/components/navigation/Navigation";
 
 export {
   FlowFieldComponent,
