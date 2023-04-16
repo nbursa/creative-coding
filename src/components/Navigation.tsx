@@ -23,6 +23,9 @@ const Navigation = () => {
             <Link href="/blog" className="text-gray-300 hover:text-gray-500 ml-4 active:text-yellow-300">
               Blog
             </Link>
+            <Link href="/about" className="text-gray-300 hover:text-gray-500 ml-4 active:text-yellow-300">
+              About
+            </Link>
             <Link href="/deploy" className="text-gray-300 hover:text-gray-500 ml-4 active:text-yellow-300">
               Deployment
             </Link>
