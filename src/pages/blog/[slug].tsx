@@ -5,7 +5,6 @@ import {BlogEntryType, CommentDataType} from '@/types';
 
 const BlogEntryPage: React.FC = () => {
   const {slug} = useRouter().query;
-  // const postsUrl = `http://localhost:1337/api/blog-posts/${slug!}?populate=comments`;
   const commentsUrl = `http://localhost:1337/api/comments`;
   const token = 'Bearer ' + process.env.NEXT_PUBLIC_STRAPI_JWT_TOKEN;
   const [post, setPost] = useState<BlogEntryType | null>(null);
@@ -14,30 +13,6 @@ const BlogEntryPage: React.FC = () => {
   const [loadingPage, setLoadingPage] = useState<boolean>(false);
   const [errorOnPage, setErrorOnPage] = useState<string>("");
 
-  // useEffect(() => {
-  //   const fetchJournalEntries = async () => {
-  //     try {
-  //       const res = await fetch(postsUrl, {
-  //         headers: {
-  //           Authorization: token,
-  //         },
-  //       });
-  //       const data = await res.json();
-  //
-  //       if (data.data.attributes) {
-  //         setPost(data.data);
-  //       } else {
-  //         setPost(null);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching data: ', error);
-  //     }
-  //   };
-  //
-  //   if (slug) {
-  //     fetchJournalEntries();
-  //   }
-  // }, [slug]);
   useEffect(() => {
     setPost({
       id: 1,
@@ -108,32 +83,6 @@ const BlogEntryPage: React.FC = () => {
 
   }, [slug])
 
-  // const {loading, error, data} = useQuery(GET_BLOG_POST_BY_SLUG, {
-  //   variables: {slug},
-  // });
-  //
-  // useEffect(() => {
-  //   if (loading) {
-  //     setLoadingPage(loading)
-  //     return;
-  //   }
-  //
-  //   if (error) {
-  //     setLoadingPage(false);
-  //     setErrorOnPage(error.message)
-  //     console.log("error", error)
-  //     console.log(`%c[Fetch error]: ${error.message}`, 'color: red');
-  //     return;
-  //   }
-  //
-  //   if (data) {
-  //     setPost(data.blogPostBySlug);
-  //   }
-  //
-  //   setLoadingPage(false);
-  //   setErrorOnPage("");
-  // }, [data, error, loading]);
-
   const addComment = async (name: string, content: string) => {
     if (!post || !post.id) {
       console.error('Cannot add comment: Post or post ID is not defined');
@@ -191,14 +140,6 @@ const BlogEntryPage: React.FC = () => {
     }
   };
 
-
-  // const handleNewComment = async (e: React.FormEvent<HTMLFormElement>, name: string, comment: string): Promise<void> => {
-  //   e.preventDefault();
-  //   if (!name.trim() || !comment.trim()) return;
-  //   await addComment(name, comment);
-  //   setNewCommentName('');
-  //   setNewCommentContent('');
-  // };
   const handleNewComment = async (e: React.FormEvent<HTMLFormElement>, name: string, comment: string) => {
     e.preventDefault();
     if (!name?.trim() || !comment?.trim()) return;
@@ -285,8 +226,8 @@ const BlogEntryPage: React.FC = () => {
     <div className="w-full min-h-screen p-4 pt-16">
       {loadingPage && <p className="text-center">Loading...</p>}
       {!!errorOnPage.length && <p className="text-center">Error: {errorOnPage}</p>}
-      {/*<h2 className="text-4xl text-center mt-8 font-semibold text-[var(--color-white)] col-span-full">Blog Post*/}
-      {/*  Page</h2>*/}
+      <h2 className="text-center text-4xl font-bold my-8">Blog Post
+        Page</h2>
       {post?.attributes && post?.id ?
         <BlogEntry post={post} handleNewComment={handleNewComment} handleReply={handleReply}/> :
         <div className="w-full mt-12 flex justify-center items-center">No journal data</div>}
