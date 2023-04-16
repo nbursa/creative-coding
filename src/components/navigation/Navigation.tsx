@@ -11,7 +11,6 @@ const Navigation = () => {
   return (
     <div className="fixed bg-black/75 shadow w-full h-14 top-0 z-40 flex items-center justify-between">
       <DesktopNavigation/>
-      {isDrawerOpen.toString()}
       <button
         onClick={handleLinkClick}
         className="mx-7 p-1 text-gray-500 hover:text-gray-300 focus:outline-none z-45 sm:hidden"
