@@ -95,9 +95,9 @@ const ChatGPTInputForm: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-full p-4 justify-between">
+    <div className="w-full h-full md:p-4 justify-between">
       <div ref={messagesRef}
-           className="min-h-[60vh] max-h-[60vh] grid grid-cols-1 overflow-hidden overflow-y-auto">
+           className="h-[74vh] md:min-h-[60vh] md:max-h-[60vh] grid grid-cols-1 overflow-hidden overflow-y-auto">
         {loading && (
           <div
             className="absolute top-0 left-0 w-full flex items-center justify-center bg-[var(--background)]">
@@ -125,7 +125,8 @@ const ChatGPTInputForm: React.FC = () => {
           </div>
         ))}
       </div>
-      <form onSubmit={handleSubmit} className="flex justify-between items-center">
+      <form onSubmit={handleSubmit}
+            className="fixed left-0 w-full p-4 bottom-0 md:relative flex justify-between items-center">
         <input
           ref={inputRef}
           type="text"
