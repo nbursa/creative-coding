@@ -48,3 +48,12 @@ body {
     transition: text-shadow 0.25s ease-in-out;
     text-shadow: 0 0 30px rgba(255, 165, 0, 1);
 }
+
+.loader {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: loader-spin 2s linear infinite;
+}
