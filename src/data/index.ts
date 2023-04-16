@@ -1,5 +1,7 @@
 import {CatalogLinkType} from "@/types";
 
+export type {CatalogLinkType};
+
 export const catalogLinks: CatalogLinkType[] = [
   {
     label: "Flow Field",

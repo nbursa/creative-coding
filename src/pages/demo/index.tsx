@@ -7,7 +7,7 @@ const DemoPage = () => {
       <h1 className="text-center text-4xl font-bold mt-8 mb-8">
         Demo components
       </h1>
-      <Catalog/>
+      <Catalog className="w-full"/>
     </main>
   )
 }
