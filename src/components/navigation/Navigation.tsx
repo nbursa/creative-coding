@@ -4,7 +4,9 @@ import {useState} from "react";
 const Navigation = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
-  const handleLinkClick = () => {
+  const handleLinkClick = (e: MouseEvent) => {
+    e.preventDefault();
+    console.log("handleLinkClick: ", e.target)
     setIsDrawerOpen(!isDrawerOpen);
   };
 
@@ -12,7 +14,7 @@ const Navigation = () => {
     <div className="fixed bg-black/75 shadow w-full h-14 top-0 z-40 flex items-center justify-between">
       <DesktopNavigation/>
       <button
-        onClick={handleLinkClick}
+        onClick={(e) => handleLinkClick}
         className="mx-7 p-1 text-gray-500 hover:text-gray-300 focus:outline-none z-45 sm:hidden"
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">

@@ -119,28 +119,30 @@ const ChatGPTInputForm: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-full md:p-4 justify-between overflow-hidden">
-      <div ref={messagesRef}
-           className="h-[74vh] md:min-h-[60vh] md:max-h-[60vh] grid grid-cols-1 overflow-hidden overflow-y-auto">
-        {conversation.map((item, index) => (
-          <div key={index}
-               className="shrink mb-2 p-2 grid grid-cols-1 grid-rows-1 gap-2 max-w-full min-w-full max-h-min order-last border-t">
-            <div className="w-full h-full flex-wrap text-sm">
-              <div className="grid gap-1 grid-cols-[50px_1fr] mb-4 text-yellow-300">
-                <div className="">Q:</div>
-                <div className="whitespace-pre break-words">
-                  <div className="whitespace-pre-line">{item.userPrompt}</div>
+    <div className="w-full h-full grid grid-rows-2">
+      <div className="w-full h-full md:p-4 flex flex-1 grow justify-between overflow-hidden">
+        <div ref={messagesRef}
+             className="h-[70vh] w-full mx-auto grid grid-cols-1 overflow-hidden overflow-y-auto">
+          {conversation.map((item, index) => (
+            <div key={index}
+                 className="w-full shrink mb-2 p-2 grid grid-cols-1 grid-rows-1 gap-2  order-last border-t">
+              <div className="w-full h-full flex-wrap text-sm">
+                <div className="grid gap-1 grid-cols-[50px_1fr] mb-4 text-yellow-300">
+                  <div className="">Q:</div>
+                  <div className="whitespace-pre break-words">
+                    <div className="whitespace-pre-line">{item.userPrompt}</div>
+                  </div>
                 </div>
-              </div>
-              <div className="grid gap-1 grid-cols-[50px_1fr] text-blue-300">
-                <div className="">A:</div>
-                <div className="">
-                  <div className="whitespace-pre-line" dangerouslySetInnerHTML={{__html: item.aiResponse}}></div>
+                <div className="grid gap-1 grid-cols-[50px_1fr] text-blue-300">
+                  <div className="">A:</div>
+                  <div className="">
+                    <div className="whitespace-pre-line" dangerouslySetInnerHTML={{__html: item.aiResponse}}></div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
       <form onSubmit={handleSubmit}
             className="fixed left-0 w-full p-4 bottom-0 md:relative flex justify-between items-center">

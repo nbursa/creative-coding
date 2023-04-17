@@ -8,8 +8,8 @@ export default function Document() {
       <Head>
         <HeadComponent pageTitle="Home Page"/>
       </Head>
-      <body>
-      <div className="grid-rows-2 h-full overflow-hidden">
+      <body className="absolute inset-0 overflow-hidden">
+      <div className="grid-rows-2 h-full">
         <Navigation/>
         <Main/>
       </div>
