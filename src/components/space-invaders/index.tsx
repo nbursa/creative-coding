@@ -182,18 +182,18 @@ const SpaceInvaders: React.FC = () => {
             }}
           >
             <svg width="60" height="30" xmlns="http://www.w3.org/2000/svg">
-              <rect x="28" y="26" width="4" height="2" fill="red"/>
-              <rect x="26" y="24" width="8" height="2" fill="red"/>
-              <rect x="24" y="22" width="12" height="2" fill="red"/>
-              <rect x="22" y="20" width="16" height="2" fill="red"/>
-              <rect x="20" y="18" width="20" height="2" fill="red"/>
-              <rect x="12" y="16" width="36" height="2" fill="red"/>
-              <rect x="10" y="14" width="40" height="2" fill="red"/>
-              <rect x="8" y="12" width="44" height="2" fill="red"/>
-              <rect x="6" y="10" width="48" height="2" fill="red"/>
-              <rect x="4" y="8" width="52" height="2" fill="red"/>
-              <rect x="2" y="6" width="56" height="2" fill="red"/>
-              <rect x="0" y="4" width="60" height="2" fill="red"/>
+              <rect x="28" y="26" width="4" height="2" fill="green"/>
+              <rect x="26" y="24" width="8" height="2" fill="green"/>
+              <rect x="24" y="22" width="12" height="2" fill="green"/>
+              <rect x="22" y="20" width="16" height="2" fill="green"/>
+              <rect x="20" y="18" width="20" height="2" fill="green"/>
+              <rect x="12" y="16" width="36" height="2" fill="green"/>
+              <rect x="10" y="14" width="40" height="2" fill="green"/>
+              <rect x="8" y="12" width="44" height="2" fill="green"/>
+              <rect x="6" y="10" width="48" height="2" fill="green"/>
+              <rect x="4" y="8" width="52" height="2" fill="green"/>
+              <rect x="2" y="6" width="56" height="2" fill="green"/>
+              <rect x="0" y="4" width="60" height="2" fill="green"/>
             </svg>
           </div>
         </>
