@@ -32,6 +32,7 @@ export interface CatalogProps {
 export interface LinkStyledProps {
   href: string;
   label: string;
+  className: string;
 }
 
 export interface PerlinNoiseProps {

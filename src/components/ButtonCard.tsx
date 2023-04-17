@@ -8,7 +8,7 @@ const ButtonCard: React.FC<ButtonCardProps> = ({href, title, description}) => {
   return (
     <Link
       href={href}
-      className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+      className="group rounded-lg border border-transparent p-12 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
       rel="noopener noreferrer"
     >
       <div className={`${inter.className} mb-3 text-2xl font-semibold text-left`}>
