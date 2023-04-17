@@ -13,8 +13,8 @@ export const navLinks: NavLink[] = [
     path: "/demo",
   },
   {
-    label: "Documentation",
-    path: "/docs",
+    label: "Games",
+    path: "/space-invaders",
   },
   {
     label: "Blog",

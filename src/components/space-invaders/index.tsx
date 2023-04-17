@@ -125,12 +125,12 @@ const SpaceInvaders: React.FC = () => {
   }, [updateBullets]);
 
   return (
-    <div className="pt-20">
+    <div className="w-full h-full flex flex-col items-center justify-center pt-20">
       {gameOver ? (
-        <>
+        <div className="flex flex-col items-center justify-center">
           <h1>Game Over!</h1>
-          <button onClick={resetGame}>Restart</button>
-        </>
+          <button className="border px-3 rounded" onClick={resetGame}>Restart</button>
+        </div>
       ) : (
         <>
           {playerPosition !== null && (
