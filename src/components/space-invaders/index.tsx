@@ -29,15 +29,6 @@ const SpaceInvaders: React.FC = () => {
     requestAnimationFrame(updatePlayerPosition);
   }, [playerPosition, pressedKeys]);
 
-  useEffect(() => {
-    requestAnimationFrame(updatePlayerPosition);
-  }, [updatePlayerPosition]);
-
-  useEffect(() => {
-    const updateInterval = setInterval(updatePlayerPosition, 1000 / 60);
-    return () => clearInterval(updateInterval);
-  }, [updatePlayerPosition]);
-
   const handleKeyEvent = useCallback((e: globalThis.KeyboardEvent, eventType: 'down' | 'up') => {
     if (eventType === 'down') {
       setPressedKeys((prev) => new Set([...Array.from(prev), e.key]));
@@ -68,31 +59,12 @@ const SpaceInvaders: React.FC = () => {
   }, [lastBulletFiredAt, playerPosition]);
 
 
-  useEffect(() => {
-    if (playerPosition === null && typeof window !== 'undefined') {
-      setPlayerPosition(window.innerWidth / 2);
-    }
-  }, [playerPosition]);
-
   const resetGame = () => {
     setPlayerPosition(window.innerWidth / 2);
     setBulletPositions([]);
     setAlienPosition({x: 100, y: 50});
     setGameOver(false);
   };
-
-  useEffect(() => {
-    const keyDownHandler = (e: globalThis.KeyboardEvent) => handleKeyEvent(e, 'down');
-    const keyUpHandler = (e: globalThis.KeyboardEvent) => handleKeyEvent(e, 'up');
-
-    document.addEventListener('keydown', keyDownHandler);
-    document.addEventListener('keyup', keyUpHandler);
-
-    return () => {
-      document.removeEventListener('keydown', keyDownHandler);
-      document.removeEventListener('keyup', keyUpHandler);
-    };
-  }, [handleKeyEvent]);
 
   const updateBullets = useCallback(() => {
     setBulletPositions((prev) => {
@@ -119,6 +91,34 @@ const SpaceInvaders: React.FC = () => {
       requestAnimationFrame(updateBullets);
     }
   }, [alienPosition.x, alienPosition.y, gameOver]);
+
+  useEffect(() => {
+    requestAnimationFrame(updatePlayerPosition);
+  }, [updatePlayerPosition]);
+
+  useEffect(() => {
+    const updateInterval = setInterval(updatePlayerPosition, 1000 / 60);
+    return () => clearInterval(updateInterval);
+  }, [updatePlayerPosition]);
+
+  useEffect(() => {
+    if (playerPosition === null && typeof window !== 'undefined') {
+      setPlayerPosition(window.innerWidth / 2);
+    }
+  }, [playerPosition]);
+
+  useEffect(() => {
+    const keyDownHandler = (e: globalThis.KeyboardEvent) => handleKeyEvent(e, 'down');
+    const keyUpHandler = (e: globalThis.KeyboardEvent) => handleKeyEvent(e, 'up');
+
+    document.addEventListener('keydown', keyDownHandler);
+    document.addEventListener('keyup', keyUpHandler);
+
+    return () => {
+      document.removeEventListener('keydown', keyDownHandler);
+      document.removeEventListener('keyup', keyUpHandler);
+    };
+  }, [handleKeyEvent]);
 
   useEffect(() => {
     requestAnimationFrame(updateBullets);
