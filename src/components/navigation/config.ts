@@ -18,7 +18,7 @@ export const navLinks: NavLink[] = [
   },
   {
     label: "Blog",
-    path: "/blog",
+    path: "/blog/1",
   },
   {
     label: "AI",

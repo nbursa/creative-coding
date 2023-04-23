@@ -1,8 +1,8 @@
 import {useRouter} from "next/router";
 import dynamic from 'next/dynamic'
 
-const getComponent = (formatedSlug: string) => {
-  return dynamic(import(`@/components/${formatedSlug}`));
+const getComponent = (formattedSlug: string) => {
+  return dynamic(import(`@/components/${formattedSlug}`));
 }
 
 const DemoPage = () => {
@@ -12,16 +12,15 @@ const DemoPage = () => {
     return <div>Loading...</div>;
   }
 
-  const formatedSlug = (slug as string)
+  const formattedSlug = (slug as string)
     .split("-")
     .map(substr => substr.charAt(0).toUpperCase() + substr.slice(1))
     .join("");
 
-  const Component = getComponent(formatedSlug)
+  const Component = getComponent(formattedSlug)
 
   return (
     <div className="relative">
-      <h1 className="fixed top-4 left-1/2 -translate-x-1/2 text-blue-700">{formatedSlug}</h1>
       <div className="w-full h-full flex justify-center items-center min-h-[calc(100vh-60px)]">
         <Component/>
       </div>

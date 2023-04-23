@@ -155,7 +155,7 @@ const ChatGPTForm: React.FC = () => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Talk to AI"
+          placeholder="Say something to AI..."
           className={`w-full px-2 py-3 text-md md:text-sm border border-[var(--color-gray)] bg-[var(--color-gray)] rounded-lg focus:outline-none grow flex-1 content-box placeholder:italic placeholder:text-gray-500 text-center ${
             loading ? 'text-gray-500' : ''
           }`}

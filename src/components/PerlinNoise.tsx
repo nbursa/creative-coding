@@ -12,7 +12,7 @@ const PerlinNoise: React.FC<PerlinNoiseProps> = ({p5Props, backgroundColor = "#0
     }
   }, [p5Props, backgroundColor, particleColor]);
 
-  return <div className="max-h-screen max-w-screen" ref={perlinNoiseRef}></div>;
+  return <div className="w-full h-full fixed top-0 left-0 z-0" ref={perlinNoiseRef}></div>;
 };
 
 const sketch = (p: typeof p5, p5Props: any, backgroundColor: string, particleColor: string) => {
