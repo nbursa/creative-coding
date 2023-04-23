@@ -2,11 +2,9 @@ import React, {useState} from 'react';
 import {DesktopNavigation, MobileNavigation} from './components';
 
 const Navigation = () => {
-  console.log("rendering Navigation")
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
   const toggleDrawer = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement, MouseEvent>) => {
-    console.log("handleLinkClick: ", e.currentTarget);
     setIsDrawerOpen(!isDrawerOpen);
   };
 

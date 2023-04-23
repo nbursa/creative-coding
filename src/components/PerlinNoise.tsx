@@ -6,18 +6,19 @@ const {Vector} = p5;
 
 const PerlinNoise: React.FC<PerlinNoiseProps> = ({p5Props, backgroundColor = "#000000", particleColor = "#ffffff"}) => {
   const perlinNoiseRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (perlinNoiseRef.current) {
       new p5((p: typeof p5) => sketch(p, p5Props, backgroundColor, particleColor), perlinNoiseRef.current);
     }
   }, [p5Props, backgroundColor, particleColor]);
 
-  return <div className="w-full h-full fixed top-0 left-0 z-0" ref={perlinNoiseRef}></div>;
+  return <div className="perlin-noise w-full h-full fixed top-0 left-0 z-0" ref={perlinNoiseRef}></div>;
 };
 
 const sketch = (p: typeof p5, p5Props: any, backgroundColor: string, particleColor: string) => {
   let inc = 0.1;
-  let scl = 20;
+  let scl = 15;
   let cols: number, rows: number;
   let zoff = 0;
   let particles: Particle[] = [];
