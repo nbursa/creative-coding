@@ -56,7 +56,7 @@ const Container: React.FC<LayoutProps> = ({children}) => {
 
   return (
     <main
-      className="relative w-full flex flex-col px-6 max-w-full overflow-hidden overflow-y-auto mx-auto h-[calc(100vh-57px)]"
+      className="relative w-full flex flex-col max-w-full overflow-hidden overflow-y-auto mx-auto h-[calc(100vh-57px)]"
       style={{
         height: containerHeight ? `${containerHeight}px` : '100%',
       }}

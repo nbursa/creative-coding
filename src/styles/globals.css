@@ -51,8 +51,8 @@ body {
     background: var(--background);
     display: grid;
     align-items: start;
-    /*grid-template-rows: env(safe-area-inset-top) 56px calc(100vh - env(safe-area-inset-top) - 57px);*/
-    grid-template-rows: 56px calc(100vh - 57px);
+    /*grid-template-rows: env(safe-area-inset-top) calc(100vh - env(safe-area-inset-top));*/
+    /*grid-template-rows: 56px calc(100vh - 57px);*/
     grid-template-columns: 1fr;
     height: 100vh;
     width: 100%;

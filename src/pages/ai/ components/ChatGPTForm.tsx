@@ -104,7 +104,7 @@ const ChatGPTForm: React.FC = () => {
   };
 
   return (
-    <div className="relative h-full w-full flex flex-col px-6 max-w-[768px] mx-auto">
+    <div className="relative h-full w-full flex flex-col px-6 max-w-[1024px] mx-auto">
       <div
         className="hall9000 relative mx-auto mt-6 w-48 h-48 flex justify-center items-center bg-black overflow-hidden rounded-full flex-shrink-0 inset-shadow-white">
         <div className="absolute -top-8 left-3 w-32 h-20 window-reflection"></div>
@@ -115,7 +115,7 @@ const ChatGPTForm: React.FC = () => {
         <div className="absolute w-8 h-8 bg-red-600 rounded-full animation-blink z-10"></div>
       </div>
       <div
-        className="chat w-full h-full max-w-[468px] mx-auto my-6 overflow-y-auto flex-grow-1">
+        className="chat w-full h-full max-w-[468px] mx-auto my-6 overflow-y-auto flex-grow flex-grow-1">
         <div ref={messagesRef}
              className="w-full h-full mx-auto grid grid-cols-1 overflow-hidden overflow-y-auto align-bottom">
           {conversation.map((item, index) => (
