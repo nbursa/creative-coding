@@ -1,29 +1,33 @@
-import {DesktopNavigation, MobileNavigation} from "./components";
-import {useState} from "react";
+import React, {useState} from 'react';
+import {DesktopNavigation, MobileNavigation} from './components';
 
 const Navigation = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
-  const handleLinkClick = (e: MouseEvent) => {
+  const toggleDrawer = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    console.log("handleLinkClick: ", e.target)
+    console.log("handleLinkClick: ", e.currentTarget);
     setIsDrawerOpen(!isDrawerOpen);
   };
 
   return (
-    <div className="fixed bg-black/75 shadow w-full h-14 top-0 z-40 flex items-center justify-between">
+    <nav className="bg-black/75 w-full h-full flex items-center justify-between z-30">
       <DesktopNavigation/>
-      <button
-        onClick={(e) => handleLinkClick}
-        className="mx-7 p-1 text-gray-500 hover:text-gray-300 focus:outline-none z-45 sm:hidden"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-          <path fill="#FFFFFF" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-        </svg>
-      </button>
-      <MobileNavigation handleLinkClick={handleLinkClick} isDrawerOpen={isDrawerOpen}/>
-    </div>
-  )
-}
+      {/*<button*/}
+      {/*  onClick={(e) => {*/}
+      {/*    console.log("handleLinkClick: ", e.currentTarget);*/}
+      {/*    toggleDrawer(e);*/}
+      {/*  }}*/}
+      {/*  className="mx-7 p-1 text-gray-500 sm:hidden border rounded z-40"*/}
+      {/*>*/}
+      {/*  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"*/}
+      {/*       className="pointer-events-none">*/}
+      {/*    <path fill="#FFFFFF" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>*/}
+      {/*  </svg>*/}
+      {/*</button>*/}
+      <MobileNavigation className={`${isDrawerOpen ? "absolute" : "hidden"}`} toggleDrawer={toggleDrawer}/>
+    </nav>
+  );
+};
 
-export default Navigation
+export default Navigation;

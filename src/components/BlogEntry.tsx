@@ -15,7 +15,7 @@ const BlogEntry: React.FC<Props> = ({post, handleReply, handleNewComment}) => {
   return (
     <div key={post?.id} className="w-full max-w-3xl mx-auto rounded-md shadow-md p-8">
       <Link href="/blog"
-            className="group inline-block text-xs text-thin mb-8 flex items-center hover:-translate-x-2 hover:transform">
+            className="group text-xs text-thin mb-8 flex items-center hover:-translate-x-2 hover:transform">
         <Image src="/icons/arrow-left-white.svg" alt="Icon arrow left" width={24} height={24} className=""/><span
         className="ml-0 group-hover:ml-1">Back to blogs</span>
       </Link>

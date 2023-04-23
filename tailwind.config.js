@@ -58,6 +58,15 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      keyframes: {
+        ablink: {
+          '0%, 100%': {backgroundColor: 'crimson'},
+          '50%': {backgroundColor: 'black'},
+        },
+      },
+      animation: {
+        blink: 'ablink 12s linear infinite',
+      },
     },
   },
   plugins: [],

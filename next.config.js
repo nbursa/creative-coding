@@ -5,7 +5,11 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: [], // Add the image domains you want to use, if any
+    domains: [],
+  },
+  devIndicators: {
+    buildActivity: false,
+    buildActivityPosition: 'bottom-right',
   },
 };
 

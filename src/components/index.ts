@@ -8,6 +8,10 @@ import Cards from "@/components/Cards";
 import Catalog from "@/components/Catalog";
 import LinkStyled from "@/components/LinkStyled";
 import Navigation from "@/components/navigation/Navigation";
+import TextFragments from "@/components/TextFragments";
+import SpaceInvaders from "@/components/SpaceInvaders";
+import SnakeGame from "@/components/SnakeGame";
+import Container from "@/components/Container";
 
 export {
   FlowFieldComponent,
@@ -19,5 +23,9 @@ export {
   Catalog,
   LinkStyled,
   Navigation,
-  PerlinNoise
+  PerlinNoise,
+  TextFragments,
+  SpaceInvaders,
+  SnakeGame,
+  Container
 };

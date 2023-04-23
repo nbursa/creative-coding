@@ -1,12 +1,37 @@
 const {createServer} = require('http');
+const express = require('express');
 const next = require('next');
 const {parse} = require('url');
-console.log('process.env.NODE_ENV: ', process.env.NODE_ENV, process.env.NODE_ENV);
+const fs = require('fs');
+const {networkInterfaces} = require('os');
+const path = require('path');
+const dotenv = require('dotenv');
+const mime = require('mime');
+
+const envFilePath = path.join(process.cwd(), '.env.local');
+dotenv.config({path: envFilePath});
+
 const dev = process.env.NODE_ENV !== 'production';
 const hostname = 'localhost';
 const port = Number(process.env.PORT) || 3003;
 const app = next({dev, hostname, port});
 const handle = app.getRequestHandler();
+
+const getLocalIP = () => {
+  const nets = networkInterfaces();
+  const results = [];
+
+  for (const name of Object.keys(nets)) {
+    for (const net of nets[name]) {
+      // Skip over non-IPv4 and internal (i.e., 127.0.0.1) addresses
+      if (net.family === 'IPv4' && !net.internal) {
+        results.push(net.address);
+      }
+    }
+  }
+
+  return results;
+};
 
 async function handleRequest(
   req,
@@ -16,7 +41,7 @@ async function handleRequest(
   try {
     const parsedUrl = parse(req.url, true);
     const {pathname, query} = parsedUrl;
-    console.log('pathname: ', pathname);
+
     if (pathname) {
       await app.render(req, res, pathname, query);
     } else {
@@ -30,10 +55,39 @@ async function handleRequest(
 }
 
 app.prepare().then(() => {
-  createServer(handleRequest).listen(port, (err) => {
+  createServer((req, res) => {
+    const parsedUrl = parse(req.url, true);
+    const {pathname} = parsedUrl;
+
+    const publicPath = path.join(process.cwd(), 'public', pathname);
+
+    fs.stat(publicPath, (err, stats) => {
+      if (err || !stats.isFile()) {
+        // If the file doesn't exist, let Next.js handle the request
+        return handle(req, res, parsedUrl);
+      }
+
+      const contentType = mime.getType(publicPath) || 'application/octet-stream';
+      res.setHeader('Content-Type', contentType);
+
+      fs.createReadStream(publicPath).pipe(res);
+    });
+  }).listen(port, (err) => {
     if (err) throw err;
-    console.log(`> Server is ready on https://${hostname}:${port}`);
+    const localIPs = getLocalIP();
+    console.log(`Local IP ready on http://${localIPs}:${port}`);
+    console.log(`> Server is ready on http://${hostname}:${port}`);
   });
 });
+
+// app.prepare().then(() => {
+//   app.use(express.static('public'));
+//   createServer(handleRequest).listen(port, (err) => {
+//     if (err) throw err;
+//     const localIPs = getLocalIP();
+//     console.log(`Local IP ready on https://${localIPs}:${port}`);
+//     console.log(`> Server is ready on https://${hostname}:${port}`);
+//   });
+// });
 
 module.exports = {};

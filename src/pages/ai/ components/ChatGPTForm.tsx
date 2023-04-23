@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {apiConfig} from './config';
 import {Configuration, OpenAIApi} from 'openai';
+import ChatLoader from './ChatLoader';
 
 interface ConversationItem {
   userPrompt: string;
@@ -12,7 +13,7 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-const ChatGPTInputForm: React.FC = () => {
+const ChatGPTForm: React.FC = () => {
   const [input, setInput] = useState('');
   const [conversation, setConversation] = useState<ConversationItem[]>([]);
   const [loading, setLoading] = useState(false);
@@ -49,13 +50,10 @@ const ChatGPTInputForm: React.FC = () => {
 
     setLoading(true);
 
-    const prompt = `As a helpful assistant, create a personalized ChatGPT model that imitates my writing style, interests, and communication preferences. Focus on providing practical advice and detailed examples when discussing various topics. Enclose any code snippets in triple backticks (\`\`\`).
+    const prompt = `AI, please impersonate HAL 9000, the artificial intelligence computer from the movie '2001: A Space Odyssey.' While staying true to HAL's character, personality, and mannerisms, please incorporate a light-hearted and humorous twist in your responses in every 7th response. Keep the humor subtle and maintain the essence of HAL's original character.`;
 
-      [User]: Who is Nenad Bursac?
-      [AI]: Nenad is a frontend developer from Belgrade, Serbia, with 8 years of professional development experience working with popular frontend frameworks and libraries.`;
-
-    const userPrompt = `[User]: ${input}`;
-    const finalPrompt = `${prompt}\n${userPrompt}\n[AI]: `;
+    const userPrompt = `${input}`;
+    const finalPrompt = `${prompt}\n${userPrompt}\n `;
 
     try {
       const response = await openai.createChatCompletion({
@@ -78,7 +76,7 @@ const ChatGPTInputForm: React.FC = () => {
 
       const newItem: ConversationItem = {
         userPrompt: userPrompt,
-        aiResponse: `[AI]: ${formattedAiResponse}`,
+        aiResponse: `${formattedAiResponse}`,
       };
 
       setConversation((prevConversation) => [...prevConversation, newItem]);
@@ -99,19 +97,6 @@ const ChatGPTInputForm: React.FC = () => {
     );
   };
 
-  const Loader: React.FC = () => {
-    return (
-      <div className="flex items-baseline justify-start text-xs space-x-2 overflow-hidden py-1.5 px-3 rounded-lg">
-        <span className="text-xs">Generating response</span>
-        <span className="flex space-x-1">
-        <span className="loader-dot w-1 h-1 bg-white rounded-full"></span>
-        <span className="loader-dot w-1 h-1 bg-white rounded-full"></span>
-        <span className="loader-dot w-1 h-1 bg-white rounded-full"></span>
-      </span>
-      </div>
-    );
-  };
-
   const handleKeyDown = async (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       await handleSubmit(event);
@@ -119,10 +104,20 @@ const ChatGPTInputForm: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-full grid grid-rows-2">
-      <div className="w-full h-full md:p-4 flex flex-1 grow justify-between overflow-hidden">
+    <div className="relative h-full w-full flex flex-col px-6 max-w-[768px] mx-auto">
+      <div
+        className="hall9000 relative mx-auto mt-6 w-48 h-48 flex justify-center items-center bg-black overflow-hidden rounded-full flex-shrink-0 inset-shadow-white">
+        <div className="absolute -top-8 left-3 w-32 h-20 window-reflection"></div>
+        <div className="absolute w-40 h-40 bg-cyan-300 opacity-[.02] rounded-full"></div>
+        <div className="absolute w-24 h-24 bg-cyan-200 opacity-[.02] rounded-full"></div>
+        <div
+          className="absolute w-4 h-4 left-[38%] top-[39%] opacity-5 bg-red-600 rounded-full z-10"></div>
+        <div className="absolute w-8 h-8 bg-red-600 rounded-full animation-blink z-10"></div>
+      </div>
+      <div
+        className="chat w-full h-full max-w-[468px] mx-auto my-6 overflow-y-auto flex-grow-1">
         <div ref={messagesRef}
-             className="h-[70vh] w-full mx-auto grid grid-cols-1 overflow-hidden overflow-y-auto">
+             className="w-full h-full mx-auto grid grid-cols-1 overflow-hidden overflow-y-auto align-bottom">
           {conversation.map((item, index) => (
             <div key={index}
                  className="w-full shrink mb-2 p-2 grid grid-cols-1 grid-rows-1 gap-2  order-last border-t">
@@ -145,11 +140,11 @@ const ChatGPTInputForm: React.FC = () => {
         </div>
       </div>
       <form onSubmit={handleSubmit}
-            className="fixed left-0 w-full p-4 bottom-0 md:relative flex justify-between items-center">
+            className="chat-form w-full relative absolute bottom-0 flex justify-between items-center flex-shrink-0 pb-6">
         {loading && (
           <div
-            className="absolute -top-3 left-4 flex items-center justify-start bg-[var(--color-gray)] bg-opacity-90">
-            <Loader/>
+            className="absolute -top-5 left-0 rounded-lg flex items-center justify-start bg-[var(--color-gray)] bg-opacity-90">
+            <ChatLoader/>
           </div>
         )}
         <input
@@ -176,4 +171,4 @@ const ChatGPTInputForm: React.FC = () => {
   );
 };
 
-export default ChatGPTInputForm;
+export default ChatGPTForm;

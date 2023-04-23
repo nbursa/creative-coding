@@ -6,13 +6,11 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <HeadComponent pageTitle="Home Page"/>
+        <HeadComponent/>
       </Head>
-      <body className="absolute inset-0 overflow-hidden">
-      <div className="grid-rows-2 h-full">
-        <Navigation/>
-        <Main/>
-      </div>
+      <body>
+      <Navigation/>
+      <Main/>
       </body>
       <NextScript/>
     </Html>

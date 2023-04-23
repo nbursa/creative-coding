@@ -15,10 +15,10 @@ export const catalogLinks: CatalogLinkType[] = [
     label: "Fractal Tree",
     href: "/demo/fractal-tree"
   },
-  {
-    label: "Snake Game",
-    href: "/demo/snake-game"
-  },
+  // {
+  //   label: "Snake Game",
+  //   href: "/demo/snake-game"
+  // },
   {
     label: "Fractal Noise",
     href: "/demo/fractal-noise"

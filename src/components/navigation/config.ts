@@ -14,18 +14,18 @@ export const navLinks: NavLink[] = [
   },
   {
     label: "Games",
-    path: "/space-invaders",
+    path: "/games",
   },
   {
     label: "Blog",
     path: "/blog",
   },
   {
-    label: "Chat",
-    path: "/chat",
+    label: "AI",
+    path: "/ai",
   },
   {
     label: "Deployment",
-    path: "/deploy",
+    path: "/deployment",
   }
 ]
