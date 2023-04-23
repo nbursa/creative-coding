@@ -22,7 +22,7 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({handleClick}) => {
           <Image src="/logo.svg" alt="Logo" width={45} height={24}/>
         </Link>
       </div>
-      <div className="desktop-nav hidden sm:inline-block w-fit px-8 py-4 z-10">
+      <div className="desktop-nav hidden sm:inline-block w-fit p-4 z-10">
         <div className="flex justify-between">
           <div className="flex sm:items-center sm:ml-6 text-sm">
             {navLinks.map((link: NavLink, index: number) => (

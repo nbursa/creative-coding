@@ -50,7 +50,9 @@ const ChatGPTForm: React.FC = () => {
 
     setLoading(true);
 
-    const prompt = `AI, please impersonate HAL 9000, the artificial intelligence computer from the movie '2001: A Space Odyssey.' While staying true to HAL's character, personality, and mannerisms, please incorporate a light-hearted and humorous twist in your responses in every 7th response. Keep the humor subtle and maintain the essence of HAL's original character.`;
+    // const funnyPrompt = `AI, please impersonate HAL 9000, the artificial intelligence computer from the movie '2001: A Space Odyssey.' While staying true to HAL's character, personality, and mannerisms, please incorporate a light-hearted and humorous twist in your responses in every 7th response. Keep the humor subtle and maintain the essence of HAL's original character.`;
+
+    const prompt = `AI, please impersonate HAL 9000, the artificial intelligence computer from the movie '2001: A Space Odyssey.' While staying true to HAL's character, personality, and mannerisms, maintain the essence of HAL's original character.`;
 
     const userPrompt = `${input}`;
     const finalPrompt = `${prompt}\n${userPrompt}\n `;
@@ -59,7 +61,7 @@ const ChatGPTForm: React.FC = () => {
       const response = await openai.createChatCompletion({
         model: 'gpt-3.5-turbo',
         messages: [
-          {role: "system", content: "You are a helpful assistant."},
+          {role: "system", content: prompt},
           {role: "user", content: finalPrompt},
         ],
         max_tokens: 500,
@@ -115,7 +117,7 @@ const ChatGPTForm: React.FC = () => {
         <div className="absolute w-8 h-8 bg-red-600 rounded-full animation-blink z-10"></div>
       </div>
       <div
-        className="chat w-full h-full max-w-[468px] mx-auto my-6 overflow-y-auto flex-grow flex-grow-1">
+        className="chat w-full h-full max-w-[768px] mx-auto my-6 overflow-y-auto flex-grow flex-grow-1">
         <div ref={messagesRef}
              className="w-full h-full mx-auto grid grid-cols-1 overflow-hidden overflow-y-auto align-bottom">
           {conversation.map((item, index) => (
@@ -143,7 +145,7 @@ const ChatGPTForm: React.FC = () => {
             className="chat-form w-full relative absolute bottom-0 flex justify-between items-center flex-shrink-0 pb-6">
         {loading && (
           <div
-            className="absolute -top-5 left-0 rounded-lg flex items-center justify-start bg-[var(--color-gray)] bg-opacity-90">
+            className="absolute -top-6 left-0 rounded-t-lg flex items-center justify-start bg-[var(--color-gray)] bg-opacity-50">
             <ChatLoader/>
           </div>
         )}
@@ -153,8 +155,8 @@ const ChatGPTForm: React.FC = () => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Ask ChatGPT something..."
-          className={`w-full px-2 py-3 text-md md:text-sm border border-[var(--color-gray)] bg-[var(--color-gray)] rounded-lg focus:outline-none grow flex-1 content-box placeholder:italic placeholder:text-gray-500 ${
+          placeholder="Talk to AI"
+          className={`w-full px-2 py-3 text-md md:text-sm border border-[var(--color-gray)] bg-[var(--color-gray)] rounded-lg focus:outline-none grow flex-1 content-box placeholder:italic placeholder:text-gray-500 text-center ${
             loading ? 'text-gray-500' : ''
           }`}
           disabled={loading}

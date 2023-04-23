@@ -12,7 +12,7 @@ const Navigation = () => {
 
   return (
     <>
-      <nav className="bg-black/75 h-[56px] w-full flex items-center justify-between z-30">
+      <nav className="h-[56px] w-full flex items-center justify-between z-30">
         <DesktopNavigation handleClick={toggleDrawer}/>
         <MobileNavigation className={`${isDrawerOpen ? "absolute" : "hidden"}`} toggleDrawer={toggleDrawer}/>
       </nav>
