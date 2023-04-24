@@ -9,10 +9,10 @@ interface Position {
 const SpaceInvaders: React.FC = () => {
   const [playerPosition, setPlayerPosition] = useState<number | null>(window.innerWidth / 2 - 31);
   const [bulletPositions, setBulletPositions] = useState<Position[]>([]);
-  const [alienPositions, setAlienPositions] = useState<Position[]>([{x: 100, y: 0}, {x: 200, y: 0}, {x: 300, y: 0}]);
-  const [gameOver, setGameOver] = useState<boolean>(false);
+  const [alienPositions, setAlienPositions] = useState<Position[]>([{x: 0, y: 0}, {x: 100, y: 0}, {x: 200, y: 0}]);
   const [pressedKeys, setPressedKeys] = useState<Set<string>>(new Set());
   const [lastBulletFiredAt, setLastBulletFiredAt] = useState<number>(0);
+  const [gameStatus, setGameStatus] = useState<"playing" | "lost" | "win">("playing");
 
   const updatePlayerPosition = useCallback(() => {
     let newPosition = playerPosition ?? -30;
@@ -29,15 +29,34 @@ const SpaceInvaders: React.FC = () => {
     requestAnimationFrame(updatePlayerPosition);
   }, [playerPosition, pressedKeys]);
 
+  const updateAlienPositions = useCallback(() => {
+    setAlienPositions((prev) => {
+      return prev.map((alien) => {
+        if (alien.y >= window.innerHeight - 126) {
+          setGameStatus("lost");
+          return alien;
+        }
+        return {...alien, y: alien.y + 5}
+      });
+    });
+
+    setTimeout(() => {
+      if (gameStatus === "playing") {
+        requestAnimationFrame(updateAlienPositions);
+      }
+    }, 1000);
+  }, [gameStatus]);
+
   const handleKeyEvent = useCallback((e: globalThis.KeyboardEvent, eventType: 'down' | 'up') => {
     if (eventType === 'down') {
       setPressedKeys((prev) => new Set([...Array.from(prev), e.key]));
 
       if (!playerPosition) return;
 
-      console.log("e.key: ", e.key, gameOver)
-      if (e.key === 'Enter' && gameOver) {
-        resetGame()
+      if (e.key === 'Enter') {
+        if (gameStatus !== 'playing') {
+          resetGame()
+        }
       }
 
       if (e.key === 'ArrowRight') {
@@ -65,10 +84,11 @@ const SpaceInvaders: React.FC = () => {
 
 
   const resetGame = () => {
-    setPlayerPosition(window.innerWidth / 2 - 31);
-    setBulletPositions([]);
-    setAlienPositions([{x: 100, y: 0}, {x: 200, y: 0}, {x: 300, y: 0}]);
-    setGameOver(false);
+    // setPlayerPosition(window.innerWidth / 2 - 31);
+    // setBulletPositions([]);
+    // setAlienPositions([{x: 0, y: 0}, {x: 100, y: 0}, {x: 200, y: 0}]);
+    // setGameStatus("playing");
+    window.location.reload();
   };
 
   const updateBullets = useCallback(() => {
@@ -98,20 +118,24 @@ const SpaceInvaders: React.FC = () => {
 
       const remainingAliens = alienPositions.filter((alien) => alien);
       if (remainingAliens.length === 0) {
-        setGameOver(true);
+        setGameStatus("win");
       }
 
       return newBullets;
     });
 
-    if (!gameOver) {
+    if (gameStatus === "playing") {
       requestAnimationFrame(updateBullets);
     }
-  }, [alienPositions, gameOver]);
+  }, [alienPositions, gameStatus]);
 
   useEffect(() => {
     requestAnimationFrame(updatePlayerPosition);
   }, [updatePlayerPosition]);
+
+  useEffect(() => {
+    requestAnimationFrame(updateAlienPositions);
+  }, [updateAlienPositions]);
 
   useEffect(() => {
     const updateInterval = setInterval(updatePlayerPosition, 1000 / 60);
@@ -137,8 +161,8 @@ const SpaceInvaders: React.FC = () => {
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center">
-      {gameOver ? (
-        <GameOver onRestart={resetGame}/>
+      {gameStatus !== "playing" ? (
+        <GameOver onClick={resetGame} status={gameStatus}/>
       ) : (
         <>
           {playerPosition && (
