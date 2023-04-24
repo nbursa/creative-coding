@@ -80,7 +80,7 @@ const SpaceInvaders: React.FC = () => {
         return new Set([...Array.from(prev)]);
       });
     }
-  }, [lastBulletFiredAt, playerPosition]);
+  }, [gameStatus, lastBulletFiredAt, playerPosition]);
 
 
   const resetGame = () => {
