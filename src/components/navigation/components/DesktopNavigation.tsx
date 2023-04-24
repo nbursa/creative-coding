@@ -24,7 +24,7 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({handleClick}) => {
       </div>
       <div className="desktop-nav hidden sm:inline-block w-fit p-4 z-10">
         <div className="flex justify-between">
-          <div className="flex sm:items-center sm:ml-6 text-sm">
+          <div className="flex sm:items-center sm:ml-[1vw] text-sm font-[400]">
             {navLinks.map((link: NavLink, index: number) => (
               link.path !== "/" &&
               <Link href={link.path} key={index} className="text-gray-300 ml-3 hover:text-gray-100">

@@ -20,11 +20,7 @@ const DemoPage = () => {
   const Component = getComponent(formattedSlug)
 
   return (
-    <div className="relative">
-      <div className="w-full h-full flex justify-center items-center min-h-[calc(100vh-60px)]">
-        <Component/>
-      </div>
-    </div>
+    <Component/>
   );
 };
 

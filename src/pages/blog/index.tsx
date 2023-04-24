@@ -31,8 +31,7 @@ const BlogPage: React.FC<BlogEntryType> = () => {
   }, [token]);
 
   return (
-    <main
-      className="w-full h-full max-w-screen-sm lg:max-w-screen-2xl xl:max-w-[75%] mx-auto grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4 p-8 pt-28">
+    <>
       <h3 className="text-center text-4xl font-bold my-8">Blog</h3>
       {journalEntries.length &&
         journalEntries.map((entry: BlogEntryType) => (
@@ -47,7 +46,7 @@ const BlogPage: React.FC<BlogEntryType> = () => {
             </div>
           </Link>
         )) || <div className="w-screen h-full flex justify-center items-center">No journal entries found.</div>}
-    </main>
+    </>
   );
 };
 

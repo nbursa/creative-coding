@@ -4,10 +4,9 @@ type FractalTreeProps = {
   iterations: number;
 };
 
-const hueShift = 20;
+const hueShift = 10;
 const lightnessShift = 0;
 const angleShift = Math.PI / 5;
-const canvasSize = 500;
 
 const drawBranch = (
   ctx: CanvasRenderingContext2D,
@@ -69,20 +68,26 @@ const FractalTree: React.FC<FractalTreeProps> = ({iterations}) => {
   const [angle, setAngle] = useState(0);
   const [hue, setHue] = useState(0);
   const [lightness, setLightness] = useState(20);
+  const [canvasSize, setCanvasSize] = useState(0);
 
   useEffect(() => {
+    const width = window.innerWidth;
+    const height = window.innerHeight - 56;
+    const canvasSize = Math.min(width, height);
+    setCanvasSize(canvasSize);
+
     if (canvasRef.current) {
       const ctx = canvasRef.current.getContext("2d");
       if (ctx) {
         ctx.clearRect(0, 0, canvasSize, canvasSize);
         const startX = canvasSize / 2;
-        const startY = canvasSize - 250;
-        const len = canvasSize / 6;
+        const startY = canvasSize * 0.6;
+        const len = canvasSize / 5;
         const width = 3;
         drawBranch(ctx, startX, startY, len, angle, width, 0, iterations, hue, lightness);
       }
     }
-  }, [iterations, hue, lightness, angle]);
+  }, [iterations, hue, lightness, angle, canvasSize]);
 
   const handleDecreaseAngleClick = () => {
     setAngle((prevAngle) => prevAngle - 0.1);
@@ -97,19 +102,19 @@ const FractalTree: React.FC<FractalTreeProps> = ({iterations}) => {
   };
 
   return (
-    <div className="flex flex-col justify-center">
+    <>
+      <canvas
+        ref={canvasRef}
+        width={canvasSize}
+        height={canvasSize * 0.65}
+        className=""
+      />
       <div className="flex justify-center items-center">
         <button className="px-4 mx-2 border border-amber-100 rounded-lg" onClick={handleDecreaseAngleClick}>-</button>
         {angle.toFixed(2)}
         <button className="px-4 mx-2 border border-amber-100 rounded-lg" onClick={handleIncreaseAngleClick}>+</button>
       </div>
-      <canvas
-        ref={canvasRef}
-        width={canvasSize}
-        height={canvasSize}
-        style={{border: "1px solid black"}}
-      />
-    </div>
+    </>
   );
 };
 

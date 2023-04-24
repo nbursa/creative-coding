@@ -223,15 +223,13 @@ const BlogEntryPage: React.FC = () => {
 
 
   return (
-    <div className="w-full min-h-screen p-4 pt-16">
+    <>
       {loadingPage && <p className="text-center">Loading...</p>}
       {!!errorOnPage.length && <p className="text-center">Error: {errorOnPage}</p>}
-      <h2 className="text-center text-4xl font-bold my-8">Blog Post
-        Page</h2>
       {post?.attributes && post?.id ?
         <BlogEntry post={post} handleNewComment={handleNewComment} handleReply={handleReply}/> :
         <div className="w-full mt-12 flex justify-center items-center">No journal data</div>}
-    </div>
+    </>
   );
 
 
