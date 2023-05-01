@@ -21,7 +21,7 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({toggleDrawer, classN
 
   return (
     <div
-      className={`${className} mobile-nav top-0 left-0 z-40 bg-black/75 backdrop-blur-sm w-screen h-screen overflow-hidden overflow-y-auto sm:hidden`}>
+      className={`${className} mobile-nav top-0 left-0 z-40 bg-black/75 backdrop-blur-sm w-screen h-screen overflow-hidden overflow-y-auto lg:hidden`}>
       <div
         className="h-full w-full flex items-center justify-center">
         <button

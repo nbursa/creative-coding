@@ -9,7 +9,7 @@ const Container: React.FC<LayoutProps> = ({children}) => {
 
   useEffect(() => {
     const updateContainerHeight = () => {
-      setContainerHeight(window.innerHeight - 60);
+      setContainerHeight(window.innerHeight - 56);
     };
 
     const handleFocus = () => {
@@ -36,27 +36,9 @@ const Container: React.FC<LayoutProps> = ({children}) => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   const handleFocus = () => {
-  //     window.scrollTo(0, 0);
-  //   };
-  //
-  //   const handleBlur = () => {
-  //     window.scrollTo(0, 0);
-  //   };
-  //
-  //   window.addEventListener('focus', handleFocus, true);
-  //   window.addEventListener('blur', handleBlur, true);
-  //
-  //   return () => {
-  //     window.removeEventListener('focus', handleFocus, true);
-  //     window.removeEventListener('blur', handleBlur, true);
-  //   };
-  // }, []);
-
   return (
     <main
-      className="relative w-full flex flex-col max-w-full overflow-hidden overflow-y-auto mx-auto h-[calc(100vh-57px)]"
+      className="relative w-full h-full flex flex-col max-w-full overflow-hidden overflow-y-auto mx-auto z-10"
       style={{
         height: containerHeight ? `${containerHeight}px` : '100%',
       }}

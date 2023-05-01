@@ -29,3 +29,5 @@ declare module 'p5' {
     constrain(n: number, low: number, high: number): number;
   }
 }
+
+declare module 'react-analytics';

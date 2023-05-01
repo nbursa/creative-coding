@@ -1,5 +1,4 @@
 import {Head, Html, Main, NextScript} from 'next/document'
-// import Navigation from "@/components/navigation/Navigation";
 import HeadComponent from "@/components/Head";
 
 export default function Document() {
@@ -9,7 +8,6 @@ export default function Document() {
         <HeadComponent/>
       </Head>
       <body>
-      {/*<Navigation/>*/}
       <Main/>
       </body>
       <NextScript/>

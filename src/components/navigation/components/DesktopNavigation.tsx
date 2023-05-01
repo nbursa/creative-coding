@@ -17,12 +17,12 @@ export async function getServerSideProps({}) {
 const DesktopNavigation: React.FC<DesktopNavigationProps> = ({handleClick}) => {
   return (
     <>
-      <div className="desk flex items-center justify-between px-4 z-30">
+      <div className="desk flex items-center justify-between px-4 z-40">
         <Link href="/" className="text-gray-500 font-medium hover:text-gray-300">
           <Image src="/logo.svg" alt="Logo" width={45} height={24}/>
         </Link>
       </div>
-      <div className="desktop-nav hidden sm:inline-block w-fit p-4 z-10">
+      <div className="desktop-nav hidden lg:block w-fit p-4 z-40">
         <div className="flex justify-between">
           <div className="flex sm:items-center sm:ml-[1vw] text-sm font-[400]">
             {navLinks.map((link: NavLink, index: number) => (
@@ -37,7 +37,7 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({handleClick}) => {
       <button
         type="button"
         onClick={handleClick}
-        className="mx-4 p-1 text-gray-500 sm:hidden border rounded z-40"
+        className="mx-4 p-1 text-gray-500 lg:hidden border rounded z-40"
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
              className="">

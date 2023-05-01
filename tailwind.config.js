@@ -23,7 +23,8 @@ module.exports = {
       '9xl': 'calc(96px + 5vw)',
     },
     textShadow: {
-      'text-shadow': '0 0 20px #ffffff',
+      // 'text-shadow': '0 0 20px rgba(255, 255, 255, 1)',
+      'text-shadow': '0 0 30px rgba(255, 165, 0, 1)',
     },
     extend: {
       colors: {

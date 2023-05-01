@@ -4,7 +4,7 @@ import React from "react";
 const DemoPage = () => {
   return (
     <>
-      <h3 className="text-center text-4xl font-bold my-8">
+      <h3 className="text-center text-4xl font-bold mt-14 mb-8">
         Demo components
       </h3>
       <Catalog className="w-full"/>

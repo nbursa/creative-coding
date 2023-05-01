@@ -78,9 +78,15 @@ body {
 /*    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);*/
 /*}*/
 
-.text-shadow:hover {
-    transition: text-shadow 0.25s ease-in-out;
-    text-shadow: 0 0 30px rgba(255, 165, 0, 1);
+/*.text-shadow:hover {*/
+/*    transition: text-shadow 0.25s ease-in-out;*/
+/*    text-shadow: 0 0 30px rgba(255, 165, 0, 1);*/
+/*}*/
+
+.text-shadow-yellow {
+    color: #000000;
+    opacity: .25;
+    text-shadow: 0 0 150px rgba(255, 165, 0, 1);
 }
 
 .loader {
