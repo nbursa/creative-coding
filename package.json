@@ -38,11 +38,14 @@
     "react-ga": "^3.3.1",
     "react-native-safe-area-context": "^4.5.1",
     "tailwindcss": "^3.3.1",
+    "three": "^0.152.2",
+    "three-gltf-loader": "^1.111.0",
     "typescript": "^5.0.4"
   },
   "devDependencies": {
     "@types/express": "^4.17.17",
     "@types/p5": "^1.6.0",
+    "@types/three": "^0.151.0",
     "jest-puppeteer": "^8.0.6",
     "ts-node": "^10.9.1"
   }

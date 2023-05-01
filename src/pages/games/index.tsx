@@ -21,6 +21,11 @@ const GamesPage = () => {
             Snake
           </Link>
         </li>
+        <li className="text-center text-base font-bold my-8">
+          <Link href={"/games/flight"}>
+            Flight
+          </Link>
+        </li>
       </ul>
     </>
   )
