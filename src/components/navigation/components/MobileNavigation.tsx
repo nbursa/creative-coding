@@ -41,7 +41,7 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({toggleDrawer, classN
             {navLinks.map((link: NavLink, index: number) => (
               <Link key={index} href={link.path}
                     className="text-gray-300 hover:text-gray-500 ml-4 active:text-yellow-300" legacyBehavior>
-                <a onClick={handleClickLink}>{link.label}</a>
+                <a onClick={handleClickLink} target={link.blank ? 'blank' : undefined}>{link.label}</a>
               </Link>
             ))}
           </div>

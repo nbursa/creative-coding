@@ -22,6 +22,5 @@ export default async function handler(
   res: NextApiResponse<{ localIPs: string[] }>
 ) {
   const localIPs = getLocalIP();
-  console.log('Local IP addresses:', localIPs);
   res.status(200).json({localIPs});
 }

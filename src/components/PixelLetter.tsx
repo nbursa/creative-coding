@@ -7,7 +7,6 @@ const p5 = require("p5");
 const PixelLetter: React.FC<PixelLetterProps> = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [selectedLetter, setSelectedLetter] = useState("A");
-  console.log("letterPaterns; ", LetterPatterns)
   useEffect(() => {
     const container = containerRef.current;
     if (!container) {

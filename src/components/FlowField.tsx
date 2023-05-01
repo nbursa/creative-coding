@@ -43,7 +43,6 @@ const FlowField: React.FC<FlowFieldProps> = ({
 
       const spacing = 16;
       for (let x = 0; x < size.width; x += spacing) {
-        console.log("size: ", size.width, size.height);
         for (let y = 0; y < size.height; y += spacing) {
           const dx = x - mousePos.x;
           const dy = y - mousePos.y;

@@ -9,7 +9,6 @@ const HeadComponent: React.FC<HeadComponentProps> = ({
                                                        pageTitle = "Creative Coding | Homepage",
                                                        description = "Homepage description"
                                                      }) => {
-  console.log("HeadComponent", pageTitle, description);
   return (
     <>
       <link rel="icon" href="/logo.svg"/>

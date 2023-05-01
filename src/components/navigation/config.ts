@@ -1,6 +1,7 @@
 export interface NavLink {
   label: string;
   path: string;
+  blank?: boolean;
 }
 
 export const navLinks: NavLink[] = [
@@ -25,7 +26,8 @@ export const navLinks: NavLink[] = [
     path: "/ai",
   },
   {
-    label: "Deployment",
-    path: "/deployment",
+    label: "About",
+    blank: true,
+    path: "https://nenadbursac.com",
   }
 ]

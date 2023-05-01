@@ -26,10 +26,16 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({handleClick}) => {
         <div className="flex justify-between">
           <div className="flex sm:items-center sm:ml-[1vw] text-sm font-[400]">
             {navLinks.map((link: NavLink, index: number) => (
-              link.path !== "/" &&
-              <Link href={link.path} key={index} className="text-gray-300 ml-3 hover:text-gray-100">
-                {link.label}
-              </Link>
+              link.path !== "/" ?
+                !link.blank
+                  ?
+                  <Link href={link.path} key={index} className="text-gray-300 ml-3 hover:text-gray-100">
+                    {link.label}
+                  </Link>
+                  :
+                  <a href={link.path} key={index} target="blank"
+                     className="text-gray-300 ml-3 hover:text-gray-100">{link.label}</a>
+                : null
             ))}
           </div>
         </div>
