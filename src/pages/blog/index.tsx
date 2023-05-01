@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import {BlogEntryType} from "@/types";
+import PageHead from "@/components/PageHead";
 
 
 const BlogPage: React.FC<BlogEntryType> = () => {
@@ -30,8 +31,12 @@ const BlogPage: React.FC<BlogEntryType> = () => {
     fetchJournalEntries();
   }, [token]);
 
+  const title = 'Creative Coding | Articles';
+  const description = 'Creative Coding blog posts';
+
   return (
     <>
+      <PageHead title={title} description={description}/>
       <h3 className="text-center text-4xl font-bold my-8">Blog</h3>
       {journalEntries.length &&
         journalEntries.map((entry: BlogEntryType) => (

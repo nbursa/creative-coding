@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
 import BlogEntry from '@/components/BlogEntry';
 import {BlogEntryType, CommentDataType} from '@/types';
+import PageHead from "@/components/PageHead";
 
 const BlogEntryPage: React.FC = () => {
   const {slug} = useRouter().query;
@@ -221,9 +222,12 @@ const BlogEntryPage: React.FC = () => {
     }
   };
 
+  const title = `Creative Coding | Article`;
+  const description = `${post?.attributes?.title} - A blog about creative coding, generative art, and other creative coding topics.`;
 
   return (
     <>
+      <PageHead title={title} description={description}/>
       {loadingPage && <p className="text-center">Loading...</p>}
       {!!errorOnPage.length && <p className="text-center">Error: {errorOnPage}</p>}
       {post?.attributes && post?.id ?

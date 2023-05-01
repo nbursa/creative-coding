@@ -2,15 +2,20 @@ import {GA_TRACKING_ID} from "@/utils/analytics";
 
 interface HeadComponentProps {
   pageTitle?: string;
+  description?: string;
 }
 
-const HeadComponent: React.FC<HeadComponentProps> = ({pageTitle}) => {
+const HeadComponent: React.FC<HeadComponentProps> = ({
+                                                       pageTitle = "Creative Coding | Homepage",
+                                                       description = "Homepage description"
+                                                     }) => {
+  console.log("HeadComponent", pageTitle, description);
   return (
     <>
       <link rel="icon" href="/logo.svg"/>
-      <meta name="description" content="Demo"/>
+      <meta name="description" content={description}/>
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
-      <title>{pageTitle || "Demo App"}</title>
+      <title>{pageTitle}</title>
       {GA_TRACKING_ID && (
         <>
           <script
