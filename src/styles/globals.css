@@ -10,8 +10,7 @@
     --color-sky: #87CEEB;
     --color-gray: #303134;
     --color-light-gray: #404244;
-    /*--background: #202124;*/
-    --background: #03050B;
+    --background: #111111;
     --foreground: #F6F6F6;
     padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
@@ -50,8 +49,6 @@ body {
     font-size: calc(16px + 0.5vw);
     color: var(--foreground);
     background: var(--background);
-    /*background-color: #03050B;*/
-    /*background-color: #202124;*/
     grid-template-columns: 1fr;
     height: 100vh;
     width: 100%;
@@ -71,18 +68,6 @@ body {
     }
 }
 
-/*#__next {*/
-/*    width: 100%;*/
-/*    height: 100%;*/
-/*    min-height: calc(100vh - 56px);*/
-/*    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);*/
-/*}*/
-
-/*.text-shadow:hover {*/
-/*    transition: text-shadow 0.25s ease-in-out;*/
-/*    text-shadow: 0 0 30px rgba(255, 165, 0, 1);*/
-/*}*/
-
 .text-shadow-yellow {
     color: #000000;
     opacity: .25;
@@ -98,7 +83,6 @@ body {
     animation: loader-spin 2s linear infinite;
 }
 
-/* Loader.css */
 .loader-dot {
     animation: loaderDotAnimation 1.4s infinite;
 }
@@ -128,7 +112,6 @@ body {
     color: #F6F6F6;
     border-radius: 3px;
     padding: 0.5rem;
-    /*font-family: 'Courier New', monospace;*/
     font-family: 'Fira Mono', monospace;
     white-space: pre-wrap;
     word-wrap: break-word;
@@ -192,8 +175,7 @@ main {
 }
 
 @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
-    /* Targeting iPhone X, iPhone XS, iPhone 11 Pro */
     .container {
-        padding-bottom: 34px; /* Adjust as needed */
+        padding-bottom: 34px;
     }
 }
