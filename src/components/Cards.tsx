@@ -10,8 +10,8 @@ const Cards: React.FC<CardsProp> = ({title, description, className}) => {
                   href="/games"/>
       <ButtonCard title="AI" description="AI powered chatbot with GPT-3.5"
                   href="/ai"/>
-      <ButtonCard title="Deploy" description="Instantly deploy your site to a shareable URL."
-                  href="/demo"/>
+      <ButtonCard title="Blog" description="Instantly deploy your site to a shareable URL."
+                  href="/blog/1"/>
       {description && <p>{description}</p>}
     </div>
   )
